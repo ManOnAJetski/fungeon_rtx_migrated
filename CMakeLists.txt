@@ -1,5 +1,6 @@
-cmake_minimum_required(version 3.20)
+cmake_minimum_required(VERSION 3.20)
 set(CMAKE_TOOLCHAIN_FILE ./vcpkg/scripts/buildsystems/vcpkg.cmake)
+set(CMAKE_DEBUG_POSTFIX _d)
 
 project(fungeon_rtx)
 
@@ -15,4 +16,7 @@ ELSE()
     message(STATUS ${Vulkan_LIBRARY})
 ENDIF()
 
+set(MAIN_PROJECT "fungeon_rtx_app")
+
 add_subdirectory(src)
+set_property (DIRECTORY PROPERTY VS_STARTUP_PROJECT ${MAIN_PROJECT})
