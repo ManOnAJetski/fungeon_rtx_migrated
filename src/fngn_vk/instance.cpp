@@ -7,15 +7,20 @@
 #include <exception>
 
 fngn_vk::instance::instance(
-    const window& window,
-    const validator& validator)
-	: m_window(window), m_validator(validator)
+    const window& window)
+	: m_window(window)
 {
     create_instance();
 }
 
 fngn_vk::instance::~instance()
 {
+    if (fngn_vk::validator::is_enabled() && m_debug_messenger)
+    {
+        fngn_vk::validator::destroy_debug_utils_messenger_ext(m_instance, m_debug_messenger, nullptr);
+        m_debug_messenger = nullptr;
+    }
+
     if (m_instance != nullptr)
     {
         vkDestroyInstance(m_instance, nullptr);
@@ -29,19 +34,31 @@ void fngn_vk::instance::create_instance()
     auto create_info = construct_instance_creation_info(&app_info);
     check_extensions(create_info);
 
-    if (m_validator.is_enabled())
+    VkDebugUtilsMessengerCreateInfoEXT debug_create_info{};
+    if (fngn_vk::validator::is_enabled())
     {
-        auto layers = m_validator.get_validation_layers();
-        create_info.enabledLayerCount = static_cast<uint32_t>(m_validator.get_num_validation_layers());
-        create_info.ppEnabledLayerNames = m_validator.get_validation_layers();
+        if (!fngn_vk::validator::check_validation_layer_support())
+        {
+            throw std::runtime_error("Validation layers requested, but not available!");
+        }
+
+        auto layers = fngn_vk::validator::get_validation_layers();
+        create_info.enabledLayerCount = static_cast<uint32_t>(fngn_vk::validator::get_num_validation_layers());
+        create_info.enabledExtensionCount = static_cast<uint32_t>(fngn_vk::validator::get_num_validation_layers());
+        create_info.ppEnabledLayerNames = fngn_vk::validator::get_validation_layers();
+        create_info.ppEnabledExtensionNames = fngn_vk::validator::get_validation_extensions();
+        fngn_vk::validator::populate_debug_messenger_create_info(debug_create_info);
+        create_info.pNext = (VkDebugUtilsMessengerCreateInfoEXT*)&debug_create_info;
     }
     else
     {
         create_info.enabledLayerCount = 0;
+        create_info.pNext = nullptr;
     }
 
     VkResult result = vkCreateInstance(&create_info, nullptr, &m_instance);
     fnvk_verify(result, "create instance");
+    setup_debug_messages();
 }
 
 VkApplicationInfo fngn_vk::instance::construct_app_info()
@@ -113,6 +130,22 @@ void fngn_vk::instance::check_extensions(const VkInstanceCreateInfo& info)
         throw std::runtime_error("Could not find all required extensions!");
     }
 
+}
+
+void fngn_vk::instance::setup_debug_messages()
+{
+    if (!fngn_vk::validator::is_enabled())
+    {
+        return;
+    }
+
+    VkDebugUtilsMessengerCreateInfoEXT createInfo;
+    fngn_vk::validator::populate_debug_messenger_create_info(createInfo);
+
+    if (fngn_vk::validator::create_debug_utils_messenger_ext(m_instance, &createInfo, nullptr, &m_debug_messenger) != VK_SUCCESS)
+    {
+        throw std::runtime_error("failed to set up debug messenger!");
+    }
 }
 
 std::vector<VkExtensionProperties> fngn_vk::instance::get_available_extensions()

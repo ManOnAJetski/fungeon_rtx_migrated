@@ -8,10 +8,9 @@ const uint32_t HEIGHT = 600;
 int main(int argc, const char** argv)
 {
     fngn_vk::window main_window;
-    fngn_vk::validator validator;
     
     try {
-        fngn_vk::instance instance(main_window, validator);
+        fngn_vk::instance instance(main_window);
         main_window.run();
     } catch (const std::exception& e) {
         std::cerr << e.what() << std::endl;

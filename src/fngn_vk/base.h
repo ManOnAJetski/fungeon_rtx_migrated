@@ -1,7 +1,9 @@
 #pragma once
 #define GLFW_INCLUDE_VULKAN
 #ifdef _WINDOWS
+#ifndef GLFW_DLL
 #define GLFW_DLL
+#endif
 #endif
 #include <GLFW/glfw3.h>
 

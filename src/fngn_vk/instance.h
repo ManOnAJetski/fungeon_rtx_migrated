@@ -13,8 +13,7 @@ namespace fngn_vk
 		PREVENT_COPY(instance);
 
 		instance(
-			const fngn_vk::window& window,
-			const fngn_vk::validator& validator);
+			const fngn_vk::window& window);
 		~instance();
 
 	private:
@@ -23,11 +22,12 @@ namespace fngn_vk
 		VkInstanceCreateInfo construct_instance_creation_info(VkApplicationInfo* app_info);
 
 		void check_extensions(const VkInstanceCreateInfo& info);
+		void setup_debug_messages();
 
 		std::vector<VkExtensionProperties> get_available_extensions();
 
-		const fngn_vk::validator& m_validator;
 		VkInstance m_instance;
 		const fngn_vk::window& m_window;
+		VkDebugUtilsMessengerEXT m_debug_messenger{};
 	};
 }
