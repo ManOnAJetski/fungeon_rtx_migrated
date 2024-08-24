@@ -11,6 +11,8 @@ set(src_files_fngn_vk
 	fngn_vk/instance.h
 	fngn_vk/window.cpp
 	fngn_vk/window.h
+	fngn_vk/validator.cpp
+	fngn_vk/validator.h
 )
 
 source_group("fungeon_rtx_app" FILES ${src_files})

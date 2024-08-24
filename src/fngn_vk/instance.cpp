@@ -1,4 +1,4 @@
-#include "instance.h"
+#include <fngn_vk/instance.h>
 #include <string>
 #include <algorithm>
 #include <iterator>
@@ -6,8 +6,10 @@
 #include <iostream>
 #include <exception>
 
-fngn_vk::instance::instance(const window& window)
-	: m_window(window)
+fngn_vk::instance::instance(
+    const window& window,
+    const validator& validator)
+	: m_window(window), m_validator(validator)
 {
     create_instance();
 }
@@ -26,6 +28,17 @@ void fngn_vk::instance::create_instance()
     auto app_info = construct_app_info();
     auto create_info = construct_instance_creation_info(&app_info);
     check_extensions(create_info);
+
+    if (m_validator.is_enabled())
+    {
+        auto layers = m_validator.get_validation_layers();
+        create_info.enabledLayerCount = static_cast<uint32_t>(m_validator.get_num_validation_layers());
+        create_info.ppEnabledLayerNames = m_validator.get_validation_layers();
+    }
+    else
+    {
+        create_info.enabledLayerCount = 0;
+    }
 
     VkResult result = vkCreateInstance(&create_info, nullptr, &m_instance);
     fnvk_verify(result, "create instance");
