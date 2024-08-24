@@ -4,11 +4,19 @@ set(src_files
 	main.cpp
 )
 
+set(src_files_fngn_vk
+	fngn_vk/base.h
+	fngn_vk/window.cpp
+	fngn_vk/window.h
+)
+
 source_group("fungeon_rtx_app" FILES ${src_files})
+source_group("fngn_vk" FILES ${src_files_fngn_vk})
 
 add_executable(
 	${exe_name}
 	${src_files}
+	${src_files_fngn_vk} 
 )
 
 set_target_properties(${exe_name} PROPERTIES DEBUG_POSTFIX ${CMAKE_DEBUG_POSTFIX})
