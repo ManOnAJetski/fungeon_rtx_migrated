@@ -1,5 +1,6 @@
 #include <iostream>
 #define GLFW_INCLUDE_VULKAN
+#define GLFW_DLL
 #include <GLFW/glfw3.h>
 
 const uint32_t WIDTH = 800;
@@ -7,7 +8,7 @@ const uint32_t HEIGHT = 600;
 
 class fungeon_rtx_hello
 {
-	public:
+public:
 	void run()
 	{
 		initWindow();
@@ -15,34 +16,37 @@ class fungeon_rtx_hello
 		mainLoop();
 		cleanup();
 	}
-	
+
 private:
-	void initWindow() {
+	void initWindow()
+	{
+		glfwInit();
+
 		glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
 		glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
-		window = glfwCreateWindow(WIDTH, HEIGHT, "Fungeon_RTX_Vulkan", nullptr, nullptr);
-    }
+		window = glfwCreateWindow(WIDTH, HEIGHT, "Vulkan", nullptr, nullptr);
+	}
 
-    void initVulkan()
+	void initVulkan()
 	{
 
-    }
+	}
 
-    void mainLoop() {
+	void mainLoop() {
 		while (!glfwWindowShouldClose(window))
 		{
 			glfwPollEvents();
 		}
-    }
+	}
 
-    void cleanup()
+	void cleanup()
 	{
 		glfwDestroyWindow(window);
 		glfwTerminate();
-    }
+	}
 
 	GLFWwindow* window;
-}
+};
 
 int main(int argc, const char** argv)
 {
