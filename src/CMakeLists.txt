@@ -7,6 +7,10 @@ set(src_files
 set(src_files_fngn_vk
 	fngn_vk/base.h
 	fngn_vk/base.cpp
+	fngn_vk/physical_devices.h
+	fngn_vk/physical_devices.cpp
+	fngn_vk/physical_device.h
+	fngn_vk/physical_device.cpp
 	fngn_vk/instance.cpp
 	fngn_vk/instance.h
 	fngn_vk/window.cpp

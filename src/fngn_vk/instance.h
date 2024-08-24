@@ -12,9 +12,10 @@ namespace fngn_vk
 	public:
 		PREVENT_COPY(instance);
 
-		instance(
-			const fngn_vk::window& window);
+		instance(const fngn_vk::window& window);
 		~instance();
+
+		inline VkInstance vk_instance() const { return m_instance; };
 
 	private:
 		void create_instance();
