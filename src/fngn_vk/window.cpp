@@ -1,4 +1,8 @@
-#include "window.h"
+#include <fngn_vk/window.h>
+
+fngn_vk::window::window()
+{
+}
 
 void fngn_vk::window::run()
 {
@@ -6,6 +10,16 @@ void fngn_vk::window::run()
 	initialize_vulkan();
 	main_loop();
 	destroy();
+}
+
+std::vector<std::string> fngn_vk::window::get_glfw_required_extensions() const
+{
+	uint32_t glfwExtensionCount = 0;
+	const char** glfwExtensions;
+
+	glfwExtensions = glfwGetRequiredInstanceExtensions(&glfwExtensionCount);
+
+	return std::vector<std::string>(glfwExtensions, glfwExtensions + glfwExtensionCount);
 }
 
 void fngn_vk::window::initialize_window()

@@ -1,17 +1,19 @@
+#pragma once
 #include <fngn_vk/base.h>
 #include <memory>
+#include <vector>
+#include <string>
 
 namespace fngn_vk
 {
 	class window final
 	{
 	public:
-		window() = default;
-		~window() = default;
+		PREVENT_COPY(window);
+		window();
 
 		void run();
-
-		PREVENT_COPY(window);
+		std::vector<std::string> get_glfw_required_extensions() const;
 
 	private:
 		void initialize_window();
