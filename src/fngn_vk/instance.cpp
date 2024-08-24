@@ -12,6 +12,15 @@ fngn_vk::instance::instance(const window& window)
     create_instance();
 }
 
+fngn_vk::instance::~instance()
+{
+    if (m_instance != nullptr)
+    {
+        vkDestroyInstance(m_instance, nullptr);
+        m_instance = nullptr;
+    }
+}
+
 void fngn_vk::instance::create_instance()
 {
     auto app_info = construct_app_info();

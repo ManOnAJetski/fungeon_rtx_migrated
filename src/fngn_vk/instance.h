@@ -12,6 +12,7 @@ namespace fngn_vk
 		PREVENT_COPY(instance);
 
 		instance(const fngn_vk::window& window);
+		~instance();
 
 	private:
 		void create_instance();
