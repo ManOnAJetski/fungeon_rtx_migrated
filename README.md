@@ -7,7 +7,7 @@ I created this mainly to practice CMake tooling and real time rendering with Vul
 
 ## Installation
 The [Vulkan SDK](https://vulkan.lunarg.com/sdk/home) must be installed.
-Run `bootstrap.bat` which will initialise the vcpkg package manager locally in the repo which will pull other dependencies automatically
+Run `.\vcpkg\bootstrap.bat` which will initialise the vcpkg package manager locally in the repo which will pull other dependencies automatically
 
 ## License
 MIT License
