@@ -5,6 +5,7 @@
 #include <iostream>
 #include "window.h"
 #include "validator.h"
+#include <utils/exception.h>
 
 fngn_vk::instance::instance(const fngn_vk::window& window)
 	: m_window(window)
@@ -56,7 +57,7 @@ void fngn_vk::instance::create_instance()
     {
         if (!fngn_vk::validator::check_validation_layer_support())
         {
-            throw std::runtime_error("Validation layers requested, but not available!");
+            fngn_throw(std::runtime_error("Validation layers requested, but not available!"));
         }
 
         auto validation_extension_count = fngn_vk::validator::get_num_validation_extensions();
@@ -149,7 +150,7 @@ void fngn_vk::instance::check_extensions(const VkInstanceCreateInfo& info)
         std::copy(STD_RANGE(intersection), std::ostream_iterator<std::string>(std::cout, "\t"));
         std::cout << '\n';
 
-        throw std::runtime_error("Could not find all required extensions!");
+        fngn_throw(std::runtime_error("Could not find all required extensions!"));
     }
 
 }
@@ -166,7 +167,7 @@ void fngn_vk::instance::setup_debug_messages()
 
     if (fngn_vk::validator::create_debug_utils_messenger_ext(m_instance, &createInfo, nullptr, &m_debug_messenger) != VK_SUCCESS)
     {
-        throw std::runtime_error("failed to set up debug messenger!");
+        fngn_throw(std::runtime_error("failed to set up debug messenger!"));
     }
 }
 

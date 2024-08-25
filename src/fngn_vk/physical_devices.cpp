@@ -5,6 +5,7 @@
 #include <algorithm>
 #include <stdexcept>
 #include <type_traits>
+#include <utils/exception.h>
 
 const std::vector<fngn_vk::physical_device> fngn_vk::physical_devices::get_phyiscal_devices(
 	const fngn_vk::instance& instance)
@@ -37,7 +38,7 @@ void fngn_vk::physical_devices::check_suitable_device_available(
 				return device.is_suitable_for(surface);
 			}))
 	{
-		throw std::runtime_error("Could not find a suitable device for Vuklan!");
+		fngn_throw(std::runtime_error("Could not find a suitable device for Vuklan!"));
 	}
 }
 

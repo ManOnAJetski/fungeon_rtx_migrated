@@ -3,6 +3,7 @@
 #include "surface.h"
 #include <stdexcept>
 #include <set>
+#include <utils/exception.h>
 
 fngn_vk::logical_device::logical_device(
 	const physical_device& physical_device,
@@ -13,7 +14,7 @@ fngn_vk::logical_device::logical_device(
 
 	if (!indices.is_complete())
 	{
-		throw std::runtime_error("Logical device could not be created, no queue families!");
+		fngn_throw(std::runtime_error("Logical device could not be created, no queue families!"));
 	}
 
 	std::vector<VkDeviceQueueCreateInfo> queue_create_infos;

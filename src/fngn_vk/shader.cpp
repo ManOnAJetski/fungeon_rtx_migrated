@@ -1,6 +1,7 @@
 #include "shader.h"
 #include "logical_device.h"
 #include <fstream>
+#include <utils/exception.h>
 
 fngn_vk::shader::shader(const logical_device& device, const std::string& filename)
 	: shader(device, read_shader_file(filename))
@@ -44,7 +45,7 @@ const std::vector<char> fngn_vk::shader::read_shader_file(const std::string& fil
 
 	if (!file.is_open())
 	{
-		throw std::runtime_error("failed to open file '" + filename + "'");
+		fngn_throw(std::runtime_error("failed to open file '" + filename + "'"));
 	}
 
 	const auto fileSize = static_cast<size_t>(file.tellg());

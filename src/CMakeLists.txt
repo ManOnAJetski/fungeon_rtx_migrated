@@ -46,20 +46,26 @@ set(src_files_fngn_vk
 	fngn_vk/validator.h
 )
 
+set(src_files_utils
+	utils/exception.h
+)
+
 source_group("fungeon_rtx_app" FILES ${src_files})
 source_group("fngn_vk" FILES ${src_files_fngn_vk})
+source_group("utils" FILES ${src_files_utils})
 
 add_executable(
 	${exe_name}
 	${src_files}
-	${src_files_fngn_vk} 
+	${src_files_fngn_vk}
+	${src_files_utils}
 )
 
 set_target_properties(${exe_name} PROPERTIES DEBUG_POSTFIX ${CMAKE_DEBUG_POSTFIX})
 
 target_include_directories(${exe_name} PRIVATE . ${Vulkan_INCLUDE_DIRS} ${GLFW_INLUDE_DIRS})
 target_link_directories(${exe_name} PRIVATE ${Vulkan_LIBRARY})
-target_link_libraries(${exe_name} PRIVATE ${Vulkan_LIBRARIES} glfw)
+target_link_libraries(${exe_name} PRIVATE ${Vulkan_LIBRARIES} glfw Boost::boost Boost::exception)
 
 find_program(GLSLC glslc)
 set(SHADERS_IN_DIR "${CMAKE_CURRENT_SOURCE_DIR}/shaders")
