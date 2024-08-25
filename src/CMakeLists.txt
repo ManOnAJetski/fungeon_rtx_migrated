@@ -17,6 +17,8 @@ set(src_files_fngn_vk
 	fngn_vk/device_queue.cpp
 	fngn_vk/instance.cpp
 	fngn_vk/instance.h
+	fngn_vk/surface.cpp
+	fngn_vk/surface.h
 	fngn_vk/window.cpp
 	fngn_vk/window.h
 	fngn_vk/validator.cpp

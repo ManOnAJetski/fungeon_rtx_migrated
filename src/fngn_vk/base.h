@@ -4,6 +4,8 @@
 #ifndef GLFW_DLL
 #define GLFW_DLL
 #endif
+#define VK_USE_PLATFORM_WIN32_KHR
+#define GLFW_EXPOSE_NATIVE_WIN32
 #endif
 #include <GLFW/glfw3.h>
 

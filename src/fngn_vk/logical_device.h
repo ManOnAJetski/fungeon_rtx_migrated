@@ -1,6 +1,7 @@
 #pragma once
 #include <fngn_vk/base.h>
 #include <fngn_vk/physical_device.h>
+#include <fngn_vk/surface.h>
 #include <vector>
 #include <optional>
 namespace fngn_vk
@@ -8,7 +9,9 @@ namespace fngn_vk
 	class logical_device
 	{
 	public:
-		explicit logical_device(const physical_device& physical_device);
+		explicit logical_device(
+			const physical_device& physical_device,
+			const surface& surface);
 		~logical_device();
 
 		inline VkDevice vk_device() const { return m_device; }

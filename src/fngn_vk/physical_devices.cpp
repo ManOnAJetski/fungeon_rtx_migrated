@@ -20,14 +20,16 @@ const std::vector<fngn_vk::physical_device> fngn_vk::physical_devices::get_phyis
 	return fngn_devices;
 }
 
-void fngn_vk::physical_devices::check_suitable_device_available(const fngn_vk::instance& instance)
+void fngn_vk::physical_devices::check_suitable_device_available(
+	const fngn_vk::instance& instance,
+	const fngn_vk::surface& surface)
 {
 	auto devices = get_phyiscal_devices(instance);
 
 	if (!std::any_of(STD_RANGE(devices),
-			[](const physical_device& device)
+			[&](const physical_device& device)
 			{
-				return device.is_suitable();
+				return device.is_suitable_for(surface);
 			}))
 	{
 		throw std::runtime_error("Could not find a suitable device for Vuklan!");

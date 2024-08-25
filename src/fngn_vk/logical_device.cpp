@@ -1,33 +1,41 @@
 #include "logical_device.h"
 #include <stdexcept>
+#include <set>
 
-fngn_vk::logical_device::logical_device(const physical_device& physical_device)
+fngn_vk::logical_device::logical_device(
+	const physical_device& physical_device,
+	const surface& surface)
 	: m_physical_device(physical_device)
 {
-	auto indices = m_physical_device.get_available_queue_families();
+	auto indices = m_physical_device.get_available_queue_families(surface);
 
-	if (!indices.graphics_family.has_value())
+	if (!indices.is_complete())
 	{
 		throw std::runtime_error("Logical device could not be created, no queue families!");
 	}
 
-	VkDeviceQueueCreateInfo queueCreateInfo{};
-	queueCreateInfo.sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
-	queueCreateInfo.queueFamilyIndex = indices.graphics_family.value();
-	queueCreateInfo.queueCount = 1;
+	std::vector<VkDeviceQueueCreateInfo> queue_create_infos;
+	std::set<uint32_t> unique_queue_families = { indices.graphics_family.value(), indices.present_family.value() };
 
 	float queuePriority = 1.0f;
-	queueCreateInfo.pQueuePriorities = &queuePriority;
+	for (uint32_t queueFamily : unique_queue_families) {
+		VkDeviceQueueCreateInfo queue_create_info{};
+		queue_create_info.sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
+		queue_create_info.queueFamilyIndex = queueFamily;
+		queue_create_info.queueCount = 1;
+		queue_create_info.pQueuePriorities = &queuePriority;
+		queue_create_infos.push_back(queue_create_info);
+	}
 
-	VkDeviceCreateInfo createInfo{};
-	createInfo.sType = VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO;
+	VkDeviceCreateInfo create_info{};
+	create_info.sType = VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO;
 
-	createInfo.pQueueCreateInfos = &queueCreateInfo;
-	createInfo.queueCreateInfoCount = 1;
+	create_info.pQueueCreateInfos = queue_create_infos.data();
+	create_info.queueCreateInfoCount = static_cast<uint32_t>(queue_create_infos.size());;
 
-	createInfo.pEnabledFeatures = &m_physical_device.get_features();
+	create_info.pEnabledFeatures = &m_physical_device.get_features();
 
-	fnvk_verify(vkCreateDevice(m_physical_device.vk_physical_device(), &createInfo, nullptr, &m_device), "Logical device creation");
+	fnvk_verify(vkCreateDevice(m_physical_device.vk_physical_device(), &create_info, nullptr, &m_device), "Logical device creation");
 }
 
 fngn_vk::logical_device::~logical_device()
