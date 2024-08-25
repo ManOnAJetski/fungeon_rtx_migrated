@@ -1,4 +1,5 @@
 #include "image_view.h"
+#include "logical_device.h"
 
 fngn_vk::image_view::image_view(const logical_device& device, VkImage image, VkFormat format, VkImageAspectFlags aspect_flags)
 	: m_device(device), m_image(image), m_format(format)

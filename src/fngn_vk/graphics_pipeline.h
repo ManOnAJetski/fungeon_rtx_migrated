@@ -1,9 +1,10 @@
 #pragma once
 #include <fngn_vk/base.h>
-#include <fngn_vk/swap_chain.h>
 
 namespace fngn_vk
 {
+	class swap_chain;
+
 	class graphics_pipeline
 	{
 		PREVENT_COPY(graphics_pipeline);

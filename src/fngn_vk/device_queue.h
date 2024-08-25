@@ -1,8 +1,11 @@
 #pragma once
-#include <fngn_vk/logical_device.h>
+#include <fngn_vk/base.h>
 
 namespace fngn_vk
 {
+	class logical_device;
+	class surface;
+
 	class device_queue
 	{
 	public:

@@ -1,12 +1,11 @@
 #pragma once
 #include <fngn_vk/base.h>
-#include <fngn_vk/window.h>
-#include <fngn_vk/validator.h>
 #include <vector>
-#include <string>
 
 namespace fngn_vk
 {
+	class window;
+
 	class instance
 	{
 	public:
@@ -16,9 +15,9 @@ namespace fngn_vk
 		~instance();
 
 		inline VkInstance vk_handle() const { return m_instance; };
-		inline const fngn_vk::window& window() const { return m_window; };
 
-		inline const std::vector<const char*> get_enabled_extension_names() const { return m_window.get_glfw_required_extension_names(); };
+		const fngn_vk::window& window() const;
+		const std::vector<const char*> get_enabled_extension_names() const;
 
 	private:
 		void create_instance();

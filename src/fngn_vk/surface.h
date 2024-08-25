@@ -1,9 +1,10 @@
 #pragma once
 #include <fngn_vk/base.h>
-#include <fngn_vk/instance.h>
 
 namespace fngn_vk
 {
+	class instance;
+
 	class surface
 	{
 	public:
@@ -13,7 +14,7 @@ namespace fngn_vk
 		~surface();
 
 		inline const VkSurfaceKHR& vk_handle() const { return m_surface; }
-		inline GLFWwindow* glfw_window() const { return m_instance.window().glfw_window(); }
+		GLFWwindow* glfw_window() const;
 
 	private:
 		const instance& m_instance;

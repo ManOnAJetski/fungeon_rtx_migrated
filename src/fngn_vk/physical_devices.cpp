@@ -1,5 +1,10 @@
 #include "physical_devices.h"
+#include "physical_device.h"
+#include "surface.h"
+#include "instance.h"
 #include <algorithm>
+#include <stdexcept>
+#include <type_traits>
 
 const std::vector<fngn_vk::physical_device> fngn_vk::physical_devices::get_phyiscal_devices(
 	const fngn_vk::instance& instance)
@@ -14,7 +19,7 @@ const std::vector<fngn_vk::physical_device> fngn_vk::physical_devices::get_phyis
 
 	for (auto& vkDevice : devices)
 	{
-		fngn_devices.push_back(physical_device(vkDevice, instance));
+		fngn_devices.emplace_back(physical_device(vkDevice, instance));
 	}
 
 	return fngn_devices;

@@ -1,4 +1,5 @@
 #include "image.h"
+#include "logical_device.h"
 
 fngn_vk::image::image(
 	const logical_device& device,

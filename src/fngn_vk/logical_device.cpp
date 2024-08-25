@@ -1,4 +1,6 @@
 #include "logical_device.h"
+#include "physical_device.h"
+#include "surface.h"
 #include <stdexcept>
 #include <set>
 

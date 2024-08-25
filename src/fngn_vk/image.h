@@ -1,9 +1,11 @@
 #pragma once
 #include <fngn_vk/base.h>
-#include <fngn_vk/logical_device.h>
+#include <optional>
 
 namespace fngn_vk
 {
+	class logical_device;
+
 	class image
 	{
 	public:

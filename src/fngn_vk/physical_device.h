@@ -1,11 +1,13 @@
 #pragma once
 #include <fngn_vk/base.h>
-#include <fngn_vk/surface.h>
-#include <fngn_vk/instance.h>
 #include <vector>
 #include <optional>
+
 namespace fngn_vk
 {
+	class surface;
+	class instance;
+
 	class physical_device
 	{
 	public:

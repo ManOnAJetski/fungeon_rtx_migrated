@@ -1,6 +1,8 @@
 #include "physical_device.h"
+#include "instance.h"
+#include "surface.h"
 #include <set>
-#include <algorithm>
+#include <iostream>
 
 fngn_vk::physical_device::physical_device(
 	const VkPhysicalDevice& device,

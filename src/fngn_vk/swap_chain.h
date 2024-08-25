@@ -1,10 +1,13 @@
 #pragma once
 #include <fngn_vk/base.h>
-#include <fngn_vk/logical_device.h>
-#include <fngn_vk/surface.h>
+#include <vector>
+#include "physical_device.h"
 
 namespace fngn_vk
 {
+	class logical_device;
+	class surface;
+
 	class swap_chain
 	{
 	public:

@@ -2,9 +2,9 @@
 #include <string>
 #include <algorithm>
 #include <iterator>
-#include <ranges>
 #include <iostream>
-#include <exception>
+#include "window.h"
+#include "validator.h"
 
 fngn_vk::instance::instance(const fngn_vk::window& window)
 	: m_window(window)
@@ -25,6 +25,16 @@ fngn_vk::instance::~instance()
         vkDestroyInstance(m_instance, nullptr);
         m_instance = nullptr;
     }
+}
+
+const fngn_vk::window& fngn_vk::instance::window() const
+{
+    return m_window;
+}
+
+const std::vector<const char*> fngn_vk::instance::get_enabled_extension_names() const
+{
+    return m_window.get_glfw_required_extension_names();
 }
 
 void fngn_vk::instance::create_instance()

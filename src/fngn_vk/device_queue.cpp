@@ -1,4 +1,7 @@
 #include "device_queue.h"
+#include "logical_device.h"
+#include "physical_device.h"
+#include "surface.h"
 #include <set>
 
 fngn_vk::device_queue::device_queue(
