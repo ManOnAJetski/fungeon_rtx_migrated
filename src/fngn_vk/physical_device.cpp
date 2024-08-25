@@ -1,11 +1,17 @@
 #include "physical_device.h"
 #include <set>
+#include <algorithm>
 
 fngn_vk::physical_device::physical_device(const VkPhysicalDevice& device)
 	: m_device(device)
 {
-	vkGetPhysicalDeviceProperties(m_device, &m_device_props);
-	vkGetPhysicalDeviceFeatures(device, &m_device_features);
+	vkGetPhysicalDeviceProperties(m_device, &m_props);
+	vkGetPhysicalDeviceFeatures(device, &m_features);
+	auto extensions = get_available_extensions();
+	std::transform(
+		STD_RANGE(extensions),
+		std::back_inserter(m_enabled_extension_names),
+		[](const VkExtensionProperties& extension) { return extension.extensionName; });
 }
 
 bool fngn_vk::physical_device::is_suitable_for(const fngn_vk::surface& surface) const
@@ -52,9 +58,9 @@ const fngn_vk::physical_device::queue_family_indicies fngn_vk::physical_device::
 const void fngn_vk::physical_device::print_device_info() const
 {
 	std::cout << "Physical Device: " << std::endl
-		<< "Device Name: " << m_device_props.deviceName << std::endl
-		<< "Device Type: " << m_device_props.deviceType << std::endl
-		<< "Driver Version: " << m_device_props.driverVersion << std::endl;
+		<< "Device Name: " << m_props.deviceName << std::endl
+		<< "Device Type: " << m_props.deviceType << std::endl
+		<< "Driver Version: " << m_props.driverVersion << std::endl;
 
 	std::cout << "Supported extensions: ";
 
