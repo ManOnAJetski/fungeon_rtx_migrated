@@ -2,6 +2,7 @@
 #include "logical_device.h"
 #include "physical_device.h"
 #include "surface.h"
+#include "image_view.h"
 #include <limits>
 #include <algorithm>
 
@@ -57,9 +58,18 @@ fngn_vk::swap_chain::swap_chain(
     auto device = m_logical_device.vk_handle();
 
     fnvk_verify(vkCreateSwapchainKHR(device, &createInfo, nullptr, &m_swap_chain), "Creating swap chain failed");
+
+    m_min_image_count = max(2u, m_swap_chain_support.capabilities.minImageCount);
+
     vkGetSwapchainImagesKHR(m_logical_device.vk_handle(), m_swap_chain, &image_count, nullptr);
     m_images.resize(image_count);
     vkGetSwapchainImagesKHR(m_logical_device.vk_handle(), m_swap_chain, &image_count, m_images.data());
+
+    m_image_views.reserve(image_count);
+    for (const auto& image : m_images)
+    {
+        m_image_views.push_back(std::make_unique<image_view>(m_logical_device, image, m_surface_format.format, VK_IMAGE_ASPECT_COLOR_BIT));
+    }
 }
 
 fngn_vk::swap_chain::~swap_chain()
