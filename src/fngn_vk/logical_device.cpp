@@ -27,7 +27,7 @@ fngn_vk::logical_device::logical_device(const physical_device& physical_device)
 
 	createInfo.pEnabledFeatures = &m_physical_device.get_features();
 
-	fnvk_verify(vkCreateDevice(physical_device.vk_physical_device(), &createInfo, nullptr, &m_device), "Logical device creation");
+	fnvk_verify(vkCreateDevice(m_physical_device.vk_physical_device(), &createInfo, nullptr, &m_device), "Logical device creation");
 }
 
 fngn_vk::logical_device::~logical_device()

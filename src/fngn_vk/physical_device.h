@@ -11,9 +11,9 @@ namespace fngn_vk
 
 		bool is_suitable() const;
 
-		inline VkPhysicalDeviceProperties get_properties() const { return m_device_props; };
-		inline VkPhysicalDeviceFeatures get_features() const { return m_device_features; };
-		inline VkPhysicalDevice vk_physical_device() const { return m_device; }
+		inline const VkPhysicalDeviceProperties& get_properties() const { return m_device_props; };
+		inline const VkPhysicalDeviceFeatures& get_features() const { return m_device_features; };
+		inline const VkPhysicalDevice& vk_physical_device() const { return m_device; }
 
 		struct queue_family_indicies
 		{
