@@ -5,9 +5,9 @@
 fngn_vk::logical_device::logical_device(
 	const physical_device& physical_device,
 	const surface& surface)
-	: m_physical_device(physical_device)
+	: m_physical_device(physical_device), m_surface(surface)
 {
-	auto indices = m_physical_device.get_available_queue_families(surface);
+	auto indices = m_physical_device.get_available_queue_families(m_surface);
 
 	if (!indices.is_complete())
 	{

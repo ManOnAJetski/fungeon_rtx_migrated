@@ -24,9 +24,18 @@ bool fngn_vk::physical_device::is_suitable_for(const fngn_vk::surface& surface) 
 	VkPhysicalDeviceFeatures deviceFeatures;
 	vkGetPhysicalDeviceFeatures(m_device, &deviceFeatures);
 
+
 	suitable &= deviceProperties.deviceType == VK_PHYSICAL_DEVICE_TYPE_DISCRETE_GPU && deviceFeatures.geometryShader;
 	suitable &= get_available_queue_families(surface).is_complete();
 	suitable &= check_device_extension_support();
+
+	// Cant check swap chain without extension
+	if (suitable)
+	{
+		auto swap_chain_details = query_swap_chain_support(surface);
+		suitable &= !swap_chain_details.formats.empty();
+		suitable &= !swap_chain_details.present_modes.empty();
+	}
 
 	return suitable;
 }
@@ -90,4 +99,23 @@ const bool fngn_vk::physical_device::check_device_extension_support() const
 	}
 
 	return requiredExtensions.empty();
+}
+
+
+const fngn_vk::physical_device::swap_chain_details fngn_vk::physical_device::query_swap_chain_support(const fngn_vk::surface& surface) const
+{
+	swap_chain_details details;
+
+	VkSurfaceCapabilitiesKHR capabilities{};
+	vkGetPhysicalDeviceSurfaceCapabilitiesKHR(m_device, surface.vk_surface(), &capabilities);
+
+	uint32_t format_count;
+	vkGetPhysicalDeviceSurfaceFormatsKHR(m_device, surface.vk_surface(), &format_count, nullptr);
+	vkGetPhysicalDeviceSurfaceFormatsKHR(m_device, surface.vk_surface(), &format_count, details.formats.data());
+
+	uint32_t present_mode_count;
+	vkGetPhysicalDeviceSurfacePresentModesKHR(m_device, surface.vk_surface(), &present_mode_count, nullptr);
+	vkGetPhysicalDeviceSurfacePresentModesKHR(m_device, surface.vk_surface(), &present_mode_count, details.present_modes.data());
+
+	return details;
 }

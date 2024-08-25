@@ -29,6 +29,14 @@ namespace fngn_vk
 
 		const queue_family_indicies get_available_queue_families(const surface& surface) const;
 
+		struct swap_chain_details {
+			VkSurfaceCapabilitiesKHR capabilities;
+			std::vector<VkSurfaceFormatKHR> formats;
+			std::vector<VkPresentModeKHR> present_modes;
+		};
+
+		const swap_chain_details query_swap_chain_support(const fngn_vk::surface& surface) const;
+
 		const void print_device_info() const;
 	private:
 
