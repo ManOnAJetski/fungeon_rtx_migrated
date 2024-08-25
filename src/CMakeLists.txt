@@ -9,8 +9,12 @@ set(src_files_fngn_vk
 	fngn_vk/base.cpp
 	fngn_vk/physical_devices.h
 	fngn_vk/physical_devices.cpp
+	fngn_vk/logical_device.h
+	fngn_vk/logical_device.cpp
 	fngn_vk/physical_device.h
 	fngn_vk/physical_device.cpp
+	fngn_vk/device_queue.h
+	fngn_vk/device_queue.cpp
 	fngn_vk/instance.cpp
 	fngn_vk/instance.h
 	fngn_vk/window.cpp

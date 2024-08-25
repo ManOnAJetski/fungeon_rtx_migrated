@@ -4,6 +4,7 @@ fngn_vk::physical_device::physical_device(const VkPhysicalDevice& device)
 	: m_device(device)
 {
 	vkGetPhysicalDeviceProperties(m_device, &m_device_props);
+	vkGetPhysicalDeviceFeatures(device, &m_device_features);
 }
 
 bool fngn_vk::physical_device::is_suitable() const
