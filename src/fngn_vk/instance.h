@@ -16,6 +16,9 @@ namespace fngn_vk
 		~instance();
 
 		inline VkInstance vk_instance() const { return m_instance; };
+		inline const fngn_vk::window& window() const { return m_window; };
+
+		inline const std::vector<const char*> get_enabled_extension_names() const { return m_window.get_glfw_required_extension_names(); };
 
 	private:
 		void create_instance();
@@ -30,5 +33,8 @@ namespace fngn_vk
 		VkInstance m_instance;
 		const fngn_vk::window& m_window;
 		VkDebugUtilsMessengerEXT m_debug_messenger{};
+
+		std::vector<VkExtensionProperties> m_enabled_extenions;
+
 	};
 }

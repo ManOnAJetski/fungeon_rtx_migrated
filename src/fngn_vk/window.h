@@ -13,14 +13,18 @@ namespace fngn_vk
 		window();
 
 		void run();
-		std::vector<std::string> get_glfw_required_extensions() const;
+
+		inline GLFWwindow* glfw_window() const { return m_window; }
+		const std::vector<const char*> get_glfw_required_extension_names() const;
 
 	private:
 		void initialize_window();
-		void initialize_vulkan();
 		void main_loop();
 		void destroy();
 
+		std::vector<std::string> get_glfw_required_extensions() const;
+
 		GLFWwindow* m_window{};
+		std::vector<std::string> m_required_extensions;
 	};
 }

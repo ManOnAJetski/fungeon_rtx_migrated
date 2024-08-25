@@ -1,6 +1,7 @@
 #pragma once
 #include <fngn_vk/base.h>
 #include <fngn_vk/surface.h>
+#include <fngn_vk/instance.h>
 #include <vector>
 #include <optional>
 namespace fngn_vk
@@ -8,14 +9,16 @@ namespace fngn_vk
 	class physical_device
 	{
 	public:
-		explicit physical_device(const VkPhysicalDevice& device);
+		explicit physical_device(
+			const VkPhysicalDevice& device,
+			const instance& instance);
 
 		bool is_suitable_for(const surface& surface) const;
 
 		inline const VkPhysicalDeviceProperties& get_properties() const { return m_props; };
 		inline const VkPhysicalDeviceFeatures& get_features() const { return m_features; };
-		inline const std::vector<const char*>& get_enabled_extension_names() const { return m_enabled_extension_names; };
 		inline const VkPhysicalDevice& vk_physical_device() const { return m_device; }
+		inline const std::vector<const char*>& get_enabled_extension_names() const { return m_required_extensions; }
 
 		struct queue_family_indicies
 		{
@@ -30,7 +33,7 @@ namespace fngn_vk
 		const queue_family_indicies get_available_queue_families(const surface& surface) const;
 
 		struct swap_chain_details {
-			VkSurfaceCapabilitiesKHR capabilities;
+			VkSurfaceCapabilitiesKHR capabilities{};
 			std::vector<VkSurfaceFormatKHR> formats;
 			std::vector<VkPresentModeKHR> present_modes;
 		};
@@ -40,6 +43,8 @@ namespace fngn_vk
 		const void print_device_info() const;
 	private:
 
+		const instance& m_instace;
+
 		const std::vector<const char*> m_required_extensions = { VK_KHR_SWAPCHAIN_EXTENSION_NAME };
 
 		const std::vector<VkExtensionProperties> get_available_extensions() const;
@@ -48,6 +53,5 @@ namespace fngn_vk
 		VkPhysicalDevice m_device = VK_NULL_HANDLE;
 		VkPhysicalDeviceProperties m_props;
 		VkPhysicalDeviceFeatures m_features;
-		std::vector<const char*> m_enabled_extension_names;
 	};
 }

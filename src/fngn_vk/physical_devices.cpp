@@ -14,7 +14,7 @@ const std::vector<fngn_vk::physical_device> fngn_vk::physical_devices::get_phyis
 
 	for (auto& vkDevice : devices)
 	{
-		fngn_devices.push_back(physical_device(vkDevice));
+		fngn_devices.push_back(physical_device(vkDevice, instance));
 	}
 
 	return fngn_devices;
@@ -36,10 +36,10 @@ void fngn_vk::physical_devices::check_suitable_device_available(
 	}
 }
 
-void fngn_vk::physical_devices::print_availabe_devices(const fngn_vk::instance& instance)
+void fngn_vk::physical_devices::print_devices(
+	const fngn_vk::instance& instance,
+	const std::vector<fngn_vk::physical_device>& devices)
 {
-	auto devices = get_phyiscal_devices(instance);
-
 	for (auto& device : devices)
 	{
 		device.print_device_info();

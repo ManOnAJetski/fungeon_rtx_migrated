@@ -5,7 +5,7 @@ const std::vector<const char*> fngn_vk::validator::enabled_validation_extensions
 
 VKAPI_ATTR VkBool32 VKAPI_CALL fngn_vk::validator::debug_callback(VkDebugUtilsMessageSeverityFlagBitsEXT messageSeverity, VkDebugUtilsMessageTypeFlagsEXT messageType, const VkDebugUtilsMessengerCallbackDataEXT* pCallbackData, void* pUserData)
 {
-	std::cerr << "validation layer: " << pCallbackData->pMessage << std::endl;
+	std::cerr << std::endl << "validation layer: " << pCallbackData->pMessage << std::endl;
 
 	return VK_FALSE;
 }

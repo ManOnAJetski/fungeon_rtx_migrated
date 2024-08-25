@@ -1,11 +1,13 @@
 cmake_minimum_required(VERSION 3.20)
 set(CMAKE_TOOLCHAIN_FILE ./vcpkg/scripts/buildsystems/vcpkg.cmake)
 set(CMAKE_DEBUG_POSTFIX _d)
+add_compile_options($<$<CXX_COMPILER_ID:MSVC>:/MP>)
 
 project(fungeon_rtx)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
 
 find_package(Vulkan REQUIRED)
 find_package(glfw3 REQUIRED)

@@ -21,6 +21,8 @@ set(src_files_fngn_vk
 	fngn_vk/surface.h
 	fngn_vk/window.cpp
 	fngn_vk/window.h
+	fngn_vk/swap_chain.cpp
+	fngn_vk/swap_chain.h
 	fngn_vk/validator.cpp
 	fngn_vk/validator.h
 )

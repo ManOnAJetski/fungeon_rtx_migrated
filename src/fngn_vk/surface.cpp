@@ -1,10 +1,10 @@
 #include <fngn_vk/surface.h>
 
-fngn_vk::surface::surface(const instance& instance, GLFWwindow* window)
+fngn_vk::surface::surface(const instance& instance)
 	: m_instance(instance)
 {
 	fnvk_verify(
-		glfwCreateWindowSurface(m_instance.vk_instance(), window, nullptr, &m_surface),
+		glfwCreateWindowSurface(m_instance.vk_instance(), glfw_window(), nullptr, &m_surface),
 		"Creating surface failed!");
 }
 

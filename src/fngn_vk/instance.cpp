@@ -6,8 +6,7 @@
 #include <iostream>
 #include <exception>
 
-fngn_vk::instance::instance(
-    const window& window)
+fngn_vk::instance::instance(const fngn_vk::window& window)
 	: m_window(window)
 {
     create_instance();
@@ -34,6 +33,14 @@ void fngn_vk::instance::create_instance()
     auto create_info = construct_instance_creation_info(&app_info);
     check_extensions(create_info);
 
+    auto required = m_window.get_glfw_required_extension_names();
+
+    std::vector<const char*> extensions_to_activate;
+    for (auto& ext : required)
+    {
+        extensions_to_activate.push_back(ext);
+    }
+
     VkDebugUtilsMessengerCreateInfoEXT debug_create_info{};
     if (fngn_vk::validator::is_enabled())
     {
@@ -42,16 +49,26 @@ void fngn_vk::instance::create_instance()
             throw std::runtime_error("Validation layers requested, but not available!");
         }
 
+        auto validation_extension_count = fngn_vk::validator::get_num_validation_extensions();
+        auto validation_extensions = fngn_vk::validator::get_validation_extensions();
+
+        extensions_to_activate.insert(
+            extensions_to_activate.end(),
+            validation_extensions,
+            validation_extensions + validation_extension_count);
+
         auto layers = fngn_vk::validator::get_validation_layers();
         create_info.enabledLayerCount = static_cast<uint32_t>(fngn_vk::validator::get_num_validation_layers());
-        create_info.enabledExtensionCount = static_cast<uint32_t>(fngn_vk::validator::get_num_validation_layers());
+        create_info.enabledExtensionCount = static_cast<uint32_t>(extensions_to_activate.size());
         create_info.ppEnabledLayerNames = fngn_vk::validator::get_validation_layers();
-        create_info.ppEnabledExtensionNames = fngn_vk::validator::get_validation_extensions();
+        create_info.ppEnabledExtensionNames = extensions_to_activate.data();
         fngn_vk::validator::populate_debug_messenger_create_info(debug_create_info);
         create_info.pNext = (VkDebugUtilsMessengerCreateInfoEXT*)&debug_create_info;
     }
     else
     {
+        create_info.enabledExtensionCount = static_cast<uint32_t>(extensions_to_activate.size());
+        create_info.ppEnabledExtensionNames = extensions_to_activate.data();
         create_info.enabledLayerCount = 0;
         create_info.pNext = nullptr;
     }
@@ -80,15 +97,10 @@ VkInstanceCreateInfo fngn_vk::instance::construct_instance_creation_info(VkAppli
     createInfo.sType = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO;
     createInfo.pApplicationInfo = app_info;
 
-    auto required = m_window.get_glfw_required_extensions();
-
-    std::vector<char*> required_cstring{};
-
-    for (auto& string : required)
-        required_cstring.push_back(&string.front());
+    auto required = m_window.get_glfw_required_extension_names();
 
     createInfo.enabledExtensionCount = required.size();
-    createInfo.ppEnabledExtensionNames = required_cstring.data();
+    createInfo.ppEnabledExtensionNames = required.data();
     createInfo.enabledLayerCount = 0;
 
     return createInfo;
@@ -97,7 +109,7 @@ VkInstanceCreateInfo fngn_vk::instance::construct_instance_creation_info(VkAppli
 void fngn_vk::instance::check_extensions(const VkInstanceCreateInfo& info)
 {
     auto available = get_available_extensions();
-    auto required = m_window.get_glfw_required_extensions();
+    auto required = m_window.get_glfw_required_extension_names();
 
     std::vector<std::string> pure_available_names;
     std::transform(STD_RANGE(available), std::back_inserter(pure_available_names),
@@ -121,7 +133,7 @@ void fngn_vk::instance::check_extensions(const VkInstanceCreateInfo& info)
     std::set_intersection(STD_RANGE(required), STD_RANGE(pure_available_names),
         std::back_inserter(intersection));
 
-    if (intersection.size() > 0)
+    if (intersection.size() != required.size())
     {
         std::cout << "\nMissing required extensions: ...\n";
         std::copy(STD_RANGE(intersection), std::ostream_iterator<std::string>(std::cout, "\t"));

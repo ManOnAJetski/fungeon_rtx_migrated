@@ -28,14 +28,14 @@ fngn_vk::logical_device::logical_device(
 	}
 
 	VkDeviceCreateInfo create_info{};
+	memset(&create_info, 0, sizeof(VkDeviceCreateInfo));
 	create_info.sType = VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO;
 
 	create_info.pQueueCreateInfos = queue_create_infos.data();
 	create_info.queueCreateInfoCount = static_cast<uint32_t>(queue_create_infos.size());;
 
 	create_info.pEnabledFeatures = &m_physical_device.get_features();
-
-	create_info.enabledExtensionCount = static_cast<uint32_t>(m_physical_device.get_enabled_extension_names().size());
+	create_info.enabledExtensionCount = m_physical_device.get_enabled_extension_names().size();
 	create_info.ppEnabledExtensionNames = m_physical_device.get_enabled_extension_names().data();
 
 	fnvk_verify(vkCreateDevice(m_physical_device.vk_physical_device(), &create_info, nullptr, &m_device), "Logical device creation");

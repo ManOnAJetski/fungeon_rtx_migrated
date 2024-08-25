@@ -2,16 +2,13 @@
 #include <set>
 #include <algorithm>
 
-fngn_vk::physical_device::physical_device(const VkPhysicalDevice& device)
-	: m_device(device)
+fngn_vk::physical_device::physical_device(
+	const VkPhysicalDevice& device,
+	const instance& instance)
+	: m_device(device), m_instace(instance)
 {
 	vkGetPhysicalDeviceProperties(m_device, &m_props);
-	vkGetPhysicalDeviceFeatures(device, &m_features);
-	auto extensions = get_available_extensions();
-	std::transform(
-		STD_RANGE(extensions),
-		std::back_inserter(m_enabled_extension_names),
-		[](const VkExtensionProperties& extension) { return extension.extensionName; });
+	vkGetPhysicalDeviceFeatures(m_device, &m_features);
 }
 
 bool fngn_vk::physical_device::is_suitable_for(const fngn_vk::surface& surface) const
@@ -23,7 +20,6 @@ bool fngn_vk::physical_device::is_suitable_for(const fngn_vk::surface& surface) 
 
 	VkPhysicalDeviceFeatures deviceFeatures;
 	vkGetPhysicalDeviceFeatures(m_device, &deviceFeatures);
-
 
 	suitable &= deviceProperties.deviceType == VK_PHYSICAL_DEVICE_TYPE_DISCRETE_GPU && deviceFeatures.geometryShader;
 	suitable &= get_available_queue_families(surface).is_complete();
@@ -111,11 +107,15 @@ const fngn_vk::physical_device::swap_chain_details fngn_vk::physical_device::que
 
 	uint32_t format_count;
 	vkGetPhysicalDeviceSurfaceFormatsKHR(m_device, surface.vk_surface(), &format_count, nullptr);
+	details.formats.resize(format_count);
 	vkGetPhysicalDeviceSurfaceFormatsKHR(m_device, surface.vk_surface(), &format_count, details.formats.data());
 
 	uint32_t present_mode_count;
 	vkGetPhysicalDeviceSurfacePresentModesKHR(m_device, surface.vk_surface(), &present_mode_count, nullptr);
+	details.present_modes.resize(format_count);
 	vkGetPhysicalDeviceSurfacePresentModesKHR(m_device, surface.vk_surface(), &present_mode_count, details.present_modes.data());
+
+	details.capabilities = capabilities;
 
 	return details;
 }

@@ -6,6 +6,8 @@ namespace fngn_vk
 	class device_queue
 	{
 	public:
+		PREVENT_COPY(device_queue);
+
 		explicit device_queue(
 			const logical_device& logical_device,
 			const surface& surface);

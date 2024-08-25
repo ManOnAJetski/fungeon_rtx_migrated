@@ -15,6 +15,6 @@ namespace fngn_vk
 		static void check_suitable_device_available(
 			const fngn_vk::instance& instance,
 			const fngn_vk::surface& surface);
-		static void print_availabe_devices(const fngn_vk::instance& instance);
+		static void print_devices(const fngn_vk::instance& instance, const std::vector<fngn_vk::physical_device>& devices);
 	};
 }
