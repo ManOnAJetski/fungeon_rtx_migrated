@@ -34,6 +34,8 @@ set(src_files_fngn_vk
 	fngn_vk/image.h
 	fngn_vk/image_view.cpp
 	fngn_vk/image_view.h
+	fngn_vk/shader.cpp
+	fngn_vk/shader.h
 	fngn_vk/surface.cpp
 	fngn_vk/surface.h
 	fngn_vk/window.cpp
