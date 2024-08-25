@@ -26,3 +26,21 @@ fngn_vk::image::image(
 
 	fngn_vk::fnvk_verify(vkCreateImage(device.vk_handle(), &imageInfo, nullptr, &m_image), "create image");
 }
+
+fngn_vk::image::image(image&& other)
+	: m_device(other.m_device),
+	m_extent(other.m_extent),
+	m_format(other.m_format),
+	m_imageLayout(other.m_imageLayout),
+	m_image(other.m_image)
+{
+}
+
+fngn_vk::image::~image()
+{
+	if (m_image)
+	{
+		vkDestroyImage(m_device.vk_handle(), m_image, nullptr);
+		m_image = nullptr;
+	}
+}

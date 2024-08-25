@@ -18,6 +18,10 @@ namespace fngn_vk
 			std::optional<VkImageTiling> tiling = std::nullopt,
 			std::optional<VkImageUsageFlags> usage = std::nullopt);
 
+		image(image&& other);
+
+		~image();
+
 	private:
 		const logical_device& m_device;
 		const VkExtent2D m_extent;
