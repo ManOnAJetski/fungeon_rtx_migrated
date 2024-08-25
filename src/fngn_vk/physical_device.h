@@ -27,9 +27,13 @@ namespace fngn_vk
 		};
 
 		const queue_family_indicies get_available_queue_families(const surface& surface) const;
+		const void print_device_info() const;
 	private:
 
-		const std::vector<const char*> deviceExtensions = { VK_KHR_SWAPCHAIN_EXTENSION_NAME };
+		const std::vector<const char*> m_required_extensions = { VK_KHR_SWAPCHAIN_EXTENSION_NAME };
+		const std::vector<VkExtensionProperties> get_available_extensions() const;
+
+		const bool check_device_extension_support() const;
 
 		VkPhysicalDevice m_device = VK_NULL_HANDLE;
 		VkPhysicalDeviceProperties m_device_props;

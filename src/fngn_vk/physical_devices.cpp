@@ -42,11 +42,6 @@ void fngn_vk::physical_devices::print_availabe_devices(const fngn_vk::instance& 
 
 	for (auto& device : devices)
 	{
-		auto props = device.get_properties();
-
-		std::cout << "Physical Device: " << std::endl
-			<< "Device Name: " << props.deviceName << std::endl
-			<< "Device Type: " << props.deviceType << std::endl
-			<< "Driver Version: " << props.driverVersion << std::endl;
+		device.print_device_info();
 	}
 }
