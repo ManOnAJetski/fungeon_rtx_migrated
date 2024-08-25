@@ -51,7 +51,7 @@ const fngn_vk::physical_device::queue_family_indicies fngn_vk::physical_device::
 			family.graphics_family = i;
 
 		VkBool32 present_support = false;
-		vkGetPhysicalDeviceSurfaceSupportKHR(m_device, i, surface.vk_surface(), &present_support);
+		vkGetPhysicalDeviceSurfaceSupportKHR(m_device, i, surface.vk_handle(), &present_support);
 
 		if (present_support)
 			family.present_family = i;
@@ -103,17 +103,17 @@ const fngn_vk::physical_device::swap_chain_details fngn_vk::physical_device::que
 	swap_chain_details details;
 
 	VkSurfaceCapabilitiesKHR capabilities{};
-	vkGetPhysicalDeviceSurfaceCapabilitiesKHR(m_device, surface.vk_surface(), &capabilities);
+	vkGetPhysicalDeviceSurfaceCapabilitiesKHR(m_device, surface.vk_handle(), &capabilities);
 
 	uint32_t format_count;
-	vkGetPhysicalDeviceSurfaceFormatsKHR(m_device, surface.vk_surface(), &format_count, nullptr);
+	vkGetPhysicalDeviceSurfaceFormatsKHR(m_device, surface.vk_handle(), &format_count, nullptr);
 	details.formats.resize(format_count);
-	vkGetPhysicalDeviceSurfaceFormatsKHR(m_device, surface.vk_surface(), &format_count, details.formats.data());
+	vkGetPhysicalDeviceSurfaceFormatsKHR(m_device, surface.vk_handle(), &format_count, details.formats.data());
 
 	uint32_t present_mode_count;
-	vkGetPhysicalDeviceSurfacePresentModesKHR(m_device, surface.vk_surface(), &present_mode_count, nullptr);
+	vkGetPhysicalDeviceSurfacePresentModesKHR(m_device, surface.vk_handle(), &present_mode_count, nullptr);
 	details.present_modes.resize(format_count);
-	vkGetPhysicalDeviceSurfacePresentModesKHR(m_device, surface.vk_surface(), &present_mode_count, details.present_modes.data());
+	vkGetPhysicalDeviceSurfacePresentModesKHR(m_device, surface.vk_handle(), &present_mode_count, details.present_modes.data());
 
 	details.capabilities = capabilities;
 

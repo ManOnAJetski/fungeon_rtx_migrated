@@ -10,7 +10,7 @@ fngn_vk::device_queue::device_queue(
 		.get_available_queue_families(surface);
 
 	vkGetDeviceQueue(
-		m_logical_device.vk_device(),
+		m_logical_device.vk_handle(),
 			m_logical_device
 				.underlying_physical()
 					.get_available_queue_families(surface)

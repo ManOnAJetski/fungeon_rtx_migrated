@@ -17,7 +17,7 @@ namespace fngn_vk
 
 		inline const VkPhysicalDeviceProperties& get_properties() const { return m_props; };
 		inline const VkPhysicalDeviceFeatures& get_features() const { return m_features; };
-		inline const VkPhysicalDevice& vk_physical_device() const { return m_device; }
+		inline const VkPhysicalDevice& vk_handle() const { return m_device; }
 		inline const std::vector<const char*>& get_enabled_extension_names() const { return m_required_extensions; }
 
 		struct queue_family_indicies

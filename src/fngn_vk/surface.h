@@ -12,7 +12,7 @@ namespace fngn_vk
 		surface(const instance& instance);
 		~surface();
 
-		inline const VkSurfaceKHR& vk_surface() const { return m_surface; }
+		inline const VkSurfaceKHR& vk_handle() const { return m_surface; }
 		inline GLFWwindow* glfw_window() const { return m_instance.window().glfw_window(); }
 
 	private:

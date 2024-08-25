@@ -14,6 +14,8 @@ namespace fngn_vk
 			const logical_device& logical_device,
 			const surface& surface);
 
+		~swap_chain();
+
 	private:
 		VkSurfaceFormatKHR choose_surface_format() const;
 		VkPresentModeKHR choose_present_mode() const;

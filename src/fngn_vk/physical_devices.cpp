@@ -5,10 +5,10 @@ const std::vector<fngn_vk::physical_device> fngn_vk::physical_devices::get_phyis
 	const fngn_vk::instance& instance)
 {
 	uint32_t deviceCount = 0;
-	vkEnumeratePhysicalDevices(instance.vk_instance(), &deviceCount, nullptr);
+	vkEnumeratePhysicalDevices(instance.vk_handle(), &deviceCount, nullptr);
 
 	std::vector<VkPhysicalDevice> devices(deviceCount);
-	vkEnumeratePhysicalDevices(instance.vk_instance(), &deviceCount, devices.data());
+	vkEnumeratePhysicalDevices(instance.vk_handle(), &deviceCount, devices.data());
 
 	std::vector<physical_device> fngn_devices;
 

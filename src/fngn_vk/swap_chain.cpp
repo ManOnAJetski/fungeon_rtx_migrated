@@ -21,7 +21,7 @@ fngn_vk::swap_chain::swap_chain(
 
     VkSwapchainCreateInfoKHR createInfo{};
     createInfo.sType = VK_STRUCTURE_TYPE_SWAPCHAIN_CREATE_INFO_KHR;
-    createInfo.surface = m_surface.vk_surface();
+    createInfo.surface = m_surface.vk_handle();
     createInfo.minImageCount = image_count;
     createInfo.imageFormat = m_surface_format.format;
     createInfo.imageColorSpace = m_surface_format.colorSpace;
@@ -51,12 +51,20 @@ fngn_vk::swap_chain::swap_chain(
     createInfo.oldSwapchain = VK_NULL_HANDLE;
     createInfo.pNext = VK_NULL_HANDLE;
 
-    auto device = m_logical_device.vk_device();
+    auto device = m_logical_device.vk_handle();
 
     fnvk_verify(vkCreateSwapchainKHR(device, &createInfo, nullptr, &m_swap_chain), "Creating swap chain failed");
-    vkGetSwapchainImagesKHR(m_logical_device.vk_device(), m_swap_chain, &image_count, nullptr);
+    vkGetSwapchainImagesKHR(m_logical_device.vk_handle(), m_swap_chain, &image_count, nullptr);
     m_images.resize(image_count);
-    vkGetSwapchainImagesKHR(m_logical_device.vk_device(), m_swap_chain, &image_count, m_images.data());
+    vkGetSwapchainImagesKHR(m_logical_device.vk_handle(), m_swap_chain, &image_count, m_images.data());
+}
+
+fngn_vk::swap_chain::~swap_chain()
+{
+    if (m_swap_chain)
+    {
+        vkDestroySwapchainKHR(m_logical_device.vk_handle(), m_swap_chain, nullptr);
+    }
 }
 
 VkSurfaceFormatKHR fngn_vk::swap_chain::choose_surface_format() const
