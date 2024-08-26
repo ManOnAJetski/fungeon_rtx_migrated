@@ -10,7 +10,7 @@ namespace fngn_vk
 	public:
 		PREVENT_COPY(fence);
 
-		fence(const logical_device& device);
+		fence(const logical_device& device, VkFenceCreateFlags flags);
 		~fence();
 
 		inline const VkFence vk_handle() const { return m_fence; }

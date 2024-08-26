@@ -26,6 +26,8 @@ namespace fngn_vk
 		const logical_device& device() const;
 		const std::vector<std::unique_ptr<image_view>>& image_views() const;
 
+		inline const VkSwapchainKHR vk_handle() const { return m_swap_chain; }
+
 	private:
 		VkSurfaceFormatKHR choose_surface_format() const;
 		VkPresentModeKHR choose_present_mode() const;

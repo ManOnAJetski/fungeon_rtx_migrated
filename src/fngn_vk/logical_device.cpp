@@ -42,6 +42,9 @@ fngn_vk::logical_device::logical_device(
 	create_info.ppEnabledExtensionNames = m_physical_device.get_enabled_extension_names().data();
 
 	fnvk_verify(vkCreateDevice(m_physical_device.vk_handle(), &create_info, nullptr, &m_device), "Logical device creation");
+
+	vkGetDeviceQueue(m_device, indices.graphics_family.value(), 0, &m_graphics_queue);
+	vkGetDeviceQueue(m_device, indices.present_family.value(), 0, &m_present_queue);
 }
 
 fngn_vk::logical_device::~logical_device()
