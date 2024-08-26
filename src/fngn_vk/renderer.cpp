@@ -9,6 +9,8 @@
 #include "logical_device.h"
 #include "frame_buffer.h"
 #include "render_pass.h"
+#include "fence.h"
+#include "binary_semaphore.h"
 
 fngn_vk::renderer::renderer(const logical_device& device)
     : m_swap_chain(std::make_unique<fngn_vk::swap_chain>(device))
@@ -48,6 +50,10 @@ fngn_vk::renderer::renderer(const logical_device& device)
 
     m_command_pool = std::make_unique<fngn_vk::command_pool>(device);
     m_command_buffer = std::make_unique<fngn_vk::command_buffer>(*m_command_pool);
+
+    m_in_flight_fence = std::make_unique<fngn_vk::fence>(device);
+    m_image_available_semaphore = std::make_unique<fngn_vk::binary_semaphore>(device);
+    m_render_finished_semaphore = std::make_unique<fngn_vk::binary_semaphore>(device);
 }
 
 void fngn_vk::renderer::draw()

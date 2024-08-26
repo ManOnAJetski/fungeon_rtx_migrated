@@ -14,6 +14,8 @@ namespace fngn_vk
 	class frame_buffer;
 	class command_pool;
 	class command_buffer;
+	class binary_semaphore;
+	class fence;
 
 	class renderer
 	{
@@ -33,5 +35,8 @@ namespace fngn_vk
 		std::vector< std::unique_ptr<fngn_vk::frame_buffer>> m_swap_chain_frame_buffers;
 		std::unique_ptr<fngn_vk::command_pool> m_command_pool;
 		std::unique_ptr<fngn_vk::command_buffer> m_command_buffer;
+		std::unique_ptr<fngn_vk::binary_semaphore> m_image_available_semaphore;
+		std::unique_ptr<fngn_vk::binary_semaphore> m_render_finished_semaphore;
+		std::unique_ptr<fngn_vk::fence> m_in_flight_fence;
 	};
 }

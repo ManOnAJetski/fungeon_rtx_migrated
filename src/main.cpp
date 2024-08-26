@@ -16,6 +16,8 @@
 #include <fngn_vk/logical_device.h>
 #include <fngn_vk/physical_device.h>
 #include <fngn_vk/frame_buffer.h>
+#include <fngn_vk/fence.h>
+#include <fngn_vk/binary_semaphore.h>
 
 const uint32_t WIDTH = 800;
 const uint32_t HEIGHT = 600;

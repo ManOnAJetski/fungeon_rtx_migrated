@@ -56,6 +56,10 @@ set(src_files_fngn_vk
 	fngn_vk/validator.h
 	fngn_vk/frame_buffer.cpp
 	fngn_vk/frame_buffer.h
+	fngn_vk/binary_semaphore.cpp
+	fngn_vk/binary_semaphore.h
+	fngn_vk/fence.cpp
+	fngn_vk/fence.h
 )
 
 set(src_files_utils
