@@ -28,12 +28,16 @@ set(src_files_fngn_vk
 	fngn_vk/device_queue.cpp
 	fngn_vk/graphics_pipeline.h
 	fngn_vk/graphics_pipeline.cpp
+	fngn_vk/pipeline_layout.h
+	fngn_vk/pipeline_layout.cpp
 	fngn_vk/instance.cpp
 	fngn_vk/instance.h
 	fngn_vk/image.cpp
 	fngn_vk/image.h
 	fngn_vk/image_view.cpp
 	fngn_vk/image_view.h
+	fngn_vk/render_pass.cpp
+	fngn_vk/render_pass.h
 	fngn_vk/shader.cpp
 	fngn_vk/shader.h
 	fngn_vk/surface.cpp
@@ -61,7 +65,7 @@ add_executable(
 	${src_files_utils}
 )
 
-set_target_properties(${exe_name} PROPERTIES DEBUG_POSTFIX ${CMAKE_DEBUG_POSTFIX})
+set_target_properties(${exe_name} PROPERTIES DEBUG_POSTFIX ${CMAKE_DEBUG_POSTFIX} VS_DEBUGGER_WORKING_DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
 
 target_include_directories(${exe_name} PRIVATE . ${Vulkan_INCLUDE_DIRS} ${GLFW_INLUDE_DIRS})
 target_link_directories(${exe_name} PRIVATE ${Vulkan_LIBRARY})

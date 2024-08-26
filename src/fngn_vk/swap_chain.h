@@ -22,6 +22,7 @@ namespace fngn_vk
 		~swap_chain();
 
 		const VkExtent2D extents() const;
+		const VkSurfaceFormatKHR surface_format() const;
 		const logical_device& device() const;
 
 	private:

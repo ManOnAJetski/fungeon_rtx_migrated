@@ -5,6 +5,11 @@
 #include <fngn_vk/logical_device.h>
 #include <fngn_vk/swap_chain.h>
 #include <fngn_vk/surface.h>
+#include <fngn_vk/shader.h>
+#include <fngn_vk/pipeline_layout.h>
+#include <fngn_vk/graphics_pipeline.h>
+#include <fngn_vk/render_pass.h>
+#include <filesystem>
 
 const uint32_t WIDTH = 800;
 const uint32_t HEIGHT = 600;
@@ -13,6 +18,8 @@ int main(int argc, const char** argv)
 {
     fngn_vk::window main_window;
     
+    auto ret_code = EXIT_SUCCESS;
+
     try {
         fngn_vk::instance instance(main_window);
         auto available_devices = fngn_vk::physical_devices::get_phyiscal_devices(instance);
@@ -23,11 +30,35 @@ int main(int argc, const char** argv)
 
         fngn_vk::swap_chain swap_chain(device, surface);
 
+        std::cout << "Current path - " << std::filesystem::current_path().string() << std::endl;
+
+        fngn_vk::shader vert_shader(
+            device,
+            std::filesystem::path("shaders\\triangle.vert.spv"),
+            VK_SHADER_STAGE_VERTEX_BIT);
+        fngn_vk::shader frag_shader(
+            device,
+            std::filesystem::path("shaders\\triangle.frag.spv"),
+            VK_SHADER_STAGE_FRAGMENT_BIT);
+
+        fngn_vk::pipeline_layout pipeline_layout(swap_chain);
+        fngn_vk::render_pass render_pass(swap_chain);
+        fngn_vk::graphics_pipeline graphics_pipeline(
+            swap_chain,
+            pipeline_layout,
+            render_pass,
+            std::vector<const fngn_vk::shader*>{ &vert_shader, &frag_shader });
+
         main_window.run();
     } catch (const std::exception& e) {
         std::cerr << e.what() << std::endl;
-        return EXIT_FAILURE;
+        ret_code =  EXIT_FAILURE;
     }
 
-    return EXIT_SUCCESS;
+    do
+    {
+        std::cout << '\n' << "Press a key to continue...";
+    } while (std::cin.get() != '\n');
+
+    return ret_code;
 }

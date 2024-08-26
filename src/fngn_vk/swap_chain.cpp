@@ -85,6 +85,11 @@ const VkExtent2D fngn_vk::swap_chain::extents() const
     return m_extents;
 }
 
+const VkSurfaceFormatKHR fngn_vk::swap_chain::surface_format() const
+{
+    return m_surface_format;
+}
+
 const fngn_vk::logical_device& fngn_vk::swap_chain::device() const
 {
     return m_logical_device;

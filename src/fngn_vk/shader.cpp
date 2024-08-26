@@ -3,13 +3,21 @@
 #include <fstream>
 #include <utils/exception.h>
 
-fngn_vk::shader::shader(const logical_device& device, const std::string& filename)
-	: shader(device, read_shader_file(filename))
+fngn_vk::shader::shader(
+	const logical_device& device,
+	const std::string& filename,
+	VkShaderStageFlagBits flag_bits)
+	: shader(device, read_shader_file(filename), flag_bits)
 {
 }
 
-fngn_vk::shader::shader(const logical_device& device, const std::vector<char>& code)
-	: m_device(device)
+fngn_vk::shader::shader(const logical_device& device, const std::filesystem::path& path, VkShaderStageFlagBits flag_bits)
+	: shader(device, read_shader_file(path.string()), flag_bits)
+{
+}
+
+fngn_vk::shader::shader(const logical_device& device, const std::vector<char>& code, VkShaderStageFlagBits flag_bits)
+	: m_device(device), m_flag_bits(flag_bits)
 {
 	VkShaderModuleCreateInfo createInfo = {};
 	createInfo.sType = VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO;
@@ -28,11 +36,11 @@ fngn_vk::shader::~shader()
 	}
 }
 
-VkPipelineShaderStageCreateInfo fngn_vk::shader::create_shader_stage(VkShaderStageFlagBits stage) const
+VkPipelineShaderStageCreateInfo fngn_vk::shader::create_shader_stage() const
 {
 	VkPipelineShaderStageCreateInfo createInfo = {};
 	createInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
-	createInfo.stage = stage;
+	createInfo.stage = m_flag_bits;
 	createInfo.module = m_shader_module;
 	createInfo.pName = "main";
 
