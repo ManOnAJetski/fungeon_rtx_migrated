@@ -27,7 +27,10 @@ namespace fngn_vk
 		void wait_for_device();
 
 	private:
-		// TODO: Refactor this so they are not ptrs
+		// We use unique_ptrs here so we can take control
+		// of the destruction sequence
+		// otherwise we rely on C++ standard object destruction
+		// ordering which is *not* standard across compilers
 		std::unique_ptr<fngn_vk::swap_chain> m_swap_chain;
 		std::unique_ptr<fngn_vk::pipeline_layout> m_pipeline_layout;
 		std::unique_ptr<fngn_vk::render_pass> m_render_pass;
