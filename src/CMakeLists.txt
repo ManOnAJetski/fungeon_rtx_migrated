@@ -24,6 +24,8 @@ set(src_files_fngn_vk
 	fngn_vk/command_buffer.cpp
 	fngn_vk/physical_devices.h
 	fngn_vk/physical_devices.cpp
+	fngn_vk/renderer.h
+	fngn_vk/renderer.cpp
 	fngn_vk/logical_device.h
 	fngn_vk/logical_device.cpp
 	fngn_vk/physical_device.h

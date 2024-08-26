@@ -1,4 +1,5 @@
 #include "window.h"
+#include "renderer.h"
 
 fngn_vk::window::window()
 {
@@ -17,6 +18,11 @@ const std::vector<const char*> fngn_vk::window::get_glfw_required_extension_name
 	for (auto& ext : m_required_extensions)
 		res.push_back(ext.data());
 	return res;
+}
+
+void fngn_vk::window::attach(const std::shared_ptr<renderer>& renderer)
+{
+	m_renderer = renderer;
 }
 
 void fngn_vk::window::initialize_window()
@@ -39,6 +45,11 @@ void fngn_vk::window::main_loop()
 {
 	while (!glfwWindowShouldClose(m_window)) {
 		glfwPollEvents();
+
+		if (m_renderer)
+		{
+			m_renderer->draw();
+		}
 	}
 }
 

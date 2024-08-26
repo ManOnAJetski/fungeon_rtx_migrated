@@ -7,12 +7,10 @@
 #include <algorithm>
 #include <ranges>
 
-fngn_vk::swap_chain::swap_chain(
-	const logical_device& logical_device,
-	const fngn_vk::surface& surface)
-	: m_logical_device(logical_device), m_surface(surface)
+fngn_vk::swap_chain::swap_chain(const logical_device& logical_device)
+	: m_logical_device(logical_device)
 {
-	m_swap_chain_support = m_logical_device.underlying_physical().query_swap_chain_support(m_surface);
+	m_swap_chain_support = m_logical_device.underlying_physical().query_swap_chain_support(m_logical_device.surface());
 	// Use one more than minumum to prevent driver stalls
 	uint32_t image_count = m_swap_chain_support.capabilities.minImageCount + 1;
 
@@ -26,7 +24,7 @@ fngn_vk::swap_chain::swap_chain(
 
 	VkSwapchainCreateInfoKHR createInfo{};
 	createInfo.sType = VK_STRUCTURE_TYPE_SWAPCHAIN_CREATE_INFO_KHR;
-	createInfo.surface = m_surface.vk_handle();
+	createInfo.surface = m_logical_device.surface().vk_handle();
 	createInfo.minImageCount = image_count;
 	createInfo.imageFormat = m_surface_format.format;
 	createInfo.imageColorSpace = m_surface_format.colorSpace;
@@ -34,7 +32,7 @@ fngn_vk::swap_chain::swap_chain(
 	createInfo.imageArrayLayers = 1;
 	createInfo.imageUsage = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT;
 
-	auto indices = m_logical_device.underlying_physical().get_available_queue_families(surface);
+	auto indices = m_logical_device.underlying_physical().get_available_queue_families(m_logical_device.surface());
 
 	uint32_t queueFamilyIndices[] = { indices.graphics_family.value(), indices.present_family.value() };
 
@@ -96,11 +94,6 @@ const fngn_vk::logical_device& fngn_vk::swap_chain::device() const
 	return m_logical_device;
 }
 
-const fngn_vk::surface& fngn_vk::swap_chain::surface() const
-{
-	return m_surface;
-}
-
 const std::vector<std::unique_ptr<fngn_vk::image_view>>& fngn_vk::swap_chain::image_views() const
 {
 	return m_image_views;
@@ -137,7 +130,7 @@ VkExtent2D fngn_vk::swap_chain::choose_extent() const
 	else
 	{
 		int width, height;
-		glfwGetFramebufferSize(m_surface.glfw_window(), &width, &height);
+		glfwGetFramebufferSize(m_logical_device.surface().glfw_window(), &width, &height);
 
 		VkExtent2D actualExtent = {
 			static_cast<uint32_t>(width),

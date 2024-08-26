@@ -17,15 +17,13 @@ namespace fngn_vk
 		PREVENT_COPY(swap_chain);
 
 		explicit swap_chain(
-			const logical_device& logical_device,
-			const surface& surface);
+			const logical_device& logical_device);
 
 		~swap_chain();
 
 		const VkExtent2D extents() const;
 		const VkSurfaceFormatKHR surface_format() const;
 		const logical_device& device() const;
-		const surface& surface() const;
 		const std::vector<std::unique_ptr<image_view>>& image_views() const;
 
 	private:
@@ -36,8 +34,6 @@ namespace fngn_vk
 		VkSurfaceFormatKHR m_surface_format;
 		VkPresentModeKHR m_present_mode;
 		VkExtent2D m_extents;
-
-		const fngn_vk::surface& m_surface;
 		const logical_device& m_logical_device;
 		physical_device::swap_chain_details m_swap_chain_support;
 
