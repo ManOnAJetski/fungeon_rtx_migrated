@@ -20,9 +20,9 @@ const std::vector<const char*> fngn_vk::window::get_glfw_required_extension_name
 	return res;
 }
 
-void fngn_vk::window::attach(const std::shared_ptr<renderer>& renderer)
+void fngn_vk::window::attach(std::unique_ptr<renderer> renderer)
 {
-	m_renderer = renderer;
+	m_renderer = std::move(renderer);
 }
 
 void fngn_vk::window::initialize_window()
@@ -53,6 +53,7 @@ void fngn_vk::window::main_loop()
 
 void fngn_vk::window::destroy()
 {
+	m_renderer.reset();
 	glfwDestroyWindow(m_window);
 	glfwTerminate();
 }

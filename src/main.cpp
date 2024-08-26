@@ -18,6 +18,7 @@
 #include <fngn_vk/frame_buffer.h>
 #include <fngn_vk/fence.h>
 #include <fngn_vk/binary_semaphore.h>
+#include <memory>
 
 const uint32_t WIDTH = 800;
 const uint32_t HEIGHT = 600;
@@ -37,8 +38,8 @@ int main(int argc, const char** argv)
         // TODO: Refactor logical_device to be a shared pointer so that we delete things properly
         fngn_vk::logical_device device(available_devices.front(), surface);
 
-        auto renderer = std::make_shared<fngn_vk::renderer>(device);
-        main_window.attach(renderer);
+        auto renderer = std::make_unique<fngn_vk::renderer>(device);
+        main_window.attach(std::move(renderer));
 
         main_window.run();
     } catch (const std::exception& e) {

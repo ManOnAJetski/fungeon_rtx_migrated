@@ -56,6 +56,24 @@ fngn_vk::renderer::renderer(const logical_device& device)
     m_render_finished_semaphore = std::make_unique<fngn_vk::binary_semaphore>(device);
 }
 
+fngn_vk::renderer::~renderer()
+{
+    m_render_finished_semaphore.reset();
+    m_image_available_semaphore.reset();
+    m_in_flight_fence.reset();
+    m_command_pool.reset();
+
+    for (auto& buffer : m_swap_chain_frame_buffers)
+    {
+        buffer.reset();
+    }
+
+    m_graphics_pipeline.reset();
+    m_pipeline_layout.reset();
+    m_render_pass.reset();
+    m_swap_chain.reset();
+}
+
 void fngn_vk::renderer::draw()
 {
     std::vector<VkFence> fences{ m_in_flight_fence->vk_handle() };

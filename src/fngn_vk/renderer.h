@@ -20,9 +20,8 @@ namespace fngn_vk
 	class renderer
 	{
 	public:
-		PREVENT_COPY(renderer);
-
 		renderer(const logical_device& device);
+		~renderer();
 
 		void draw();
 		void wait_for_device();

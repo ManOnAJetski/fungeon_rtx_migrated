@@ -19,7 +19,7 @@ namespace fngn_vk
 		inline GLFWwindow* glfw_window() const { return m_window; }
 		const std::vector<const char*> get_glfw_required_extension_names() const;
 
-		void attach(const std::shared_ptr<renderer>& renderer);
+		void attach(std::unique_ptr<renderer> renderer);
 
 	private:
 		void initialize_window();
@@ -29,7 +29,7 @@ namespace fngn_vk
 		std::vector<std::string> get_glfw_required_extensions() const;
 
 		GLFWwindow* m_window{};
-		std::shared_ptr<renderer> m_renderer;
+		std::unique_ptr<renderer> m_renderer;
 		std::vector<std::string> m_required_extensions;
 	};
 }

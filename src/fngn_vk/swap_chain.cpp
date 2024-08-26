@@ -73,10 +73,16 @@ fngn_vk::swap_chain::swap_chain(const logical_device& logical_device)
 
 fngn_vk::swap_chain::~swap_chain()
 {
+	for (auto& i_v : m_image_views)
+	{
+		i_v.reset();
+	}
+
 	if (m_swap_chain)
 	{
 		vkDestroySwapchainKHR(m_logical_device.vk_handle(), m_swap_chain, nullptr);
 	}
+
 }
 
 const VkExtent2D fngn_vk::swap_chain::extents() const
