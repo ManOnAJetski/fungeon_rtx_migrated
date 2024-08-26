@@ -10,5 +10,9 @@ namespace fngn_vk
 		PREVENT_COPY(graphics_pipeline);
 
 		graphics_pipeline(const swap_chain& swap_chain);
+		~graphics_pipeline();
+	private:
+		const swap_chain& m_swap_chain;
+		VkPipelineLayout m_layout{};
 	};
 }

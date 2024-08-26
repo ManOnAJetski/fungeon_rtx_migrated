@@ -80,6 +80,16 @@ fngn_vk::swap_chain::~swap_chain()
     }
 }
 
+const VkExtent2D fngn_vk::swap_chain::extents() const
+{
+    return m_extents;
+}
+
+const fngn_vk::logical_device& fngn_vk::swap_chain::device() const
+{
+    return m_logical_device;
+}
+
 VkSurfaceFormatKHR fngn_vk::swap_chain::choose_surface_format() const
 {
     for (const auto& available_format : m_swap_chain_support.formats) {

@@ -1,8 +1,7 @@
 #pragma once
-
 #include <boost/exception/all.hpp>
 #include <boost/stacktrace.hpp>
-#undef APIENTRY
+
 
 typedef boost::error_info<struct tag_stacktrace, boost::stacktrace::stacktrace> traced;
 
