@@ -45,12 +45,10 @@ void fngn_vk::window::main_loop()
 {
 	while (!glfwWindowShouldClose(m_window)) {
 		glfwPollEvents();
-
-		if (m_renderer)
-		{
-			m_renderer->draw();
-		}
+		m_renderer->draw();
 	}
+
+	m_renderer->wait_for_device();
 }
 
 void fngn_vk::window::destroy()

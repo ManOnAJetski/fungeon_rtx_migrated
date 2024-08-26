@@ -25,8 +25,10 @@ namespace fngn_vk
 		renderer(const logical_device& device);
 
 		void draw();
+		void wait_for_device();
 
 	private:
+		// TODO: Refactor this so they are not ptrs
 		std::unique_ptr<fngn_vk::swap_chain> m_swap_chain;
 		std::unique_ptr<fngn_vk::pipeline_layout> m_pipeline_layout;
 		std::unique_ptr<fngn_vk::render_pass> m_render_pass;

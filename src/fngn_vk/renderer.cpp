@@ -109,3 +109,8 @@ void fngn_vk::renderer::draw()
 
     vkQueuePresentKHR(m_swap_chain->device().graphics_queue(), &present_info);
 }
+
+void fngn_vk::renderer::wait_for_device()
+{
+    vkDeviceWaitIdle(m_swap_chain->device().vk_handle());
+}

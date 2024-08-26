@@ -33,6 +33,8 @@ int main(int argc, const char** argv)
         auto available_devices = fngn_vk::physical_devices::get_phyiscal_devices(instance);
         fngn_vk::physical_devices::print_devices(instance, available_devices);
         fngn_vk::surface surface(instance);
+
+        // TODO: Refactor logical_device to be a shared pointer so that we delete things properly
         fngn_vk::logical_device device(available_devices.front(), surface);
 
         auto renderer = std::make_shared<fngn_vk::renderer>(device);
