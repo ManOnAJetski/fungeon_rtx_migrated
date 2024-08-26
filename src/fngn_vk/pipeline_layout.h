@@ -1,5 +1,6 @@
 #pragma once
 #include <fngn_vk/base.h>
+#include <vector>
 
 namespace fngn_vk
 {
@@ -27,6 +28,9 @@ namespace fngn_vk
 		inline const VkPipelineLayout vk_handle() const { return m_layout; }
 
 	private:
+		const std::vector<VkDynamicState> m_dynamic_states = { VK_DYNAMIC_STATE_VIEWPORT, VK_DYNAMIC_STATE_SCISSOR };
+		VkPipelineColorBlendAttachmentState m_color_blend_attachment_state{};
+
 		const swap_chain& m_swap_chain;
 		VkPipelineLayout m_layout{};
 		pipeline_creation_info m_creation_info;

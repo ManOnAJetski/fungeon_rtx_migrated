@@ -47,7 +47,12 @@ namespace fngn_vk
 
 		const instance& m_instace;
 
-		const std::vector<const char*> m_required_extensions = { VK_KHR_SWAPCHAIN_EXTENSION_NAME };
+		const std::vector<const char*> m_required_extensions =
+		{
+			VK_KHR_SWAPCHAIN_EXTENSION_NAME,
+			VK_EXT_GRAPHICS_PIPELINE_LIBRARY_EXTENSION_NAME,
+			VK_KHR_PIPELINE_LIBRARY_EXTENSION_NAME
+		};
 
 		const std::vector<VkExtensionProperties> get_available_extensions() const;
 		const bool check_device_extension_support() const;

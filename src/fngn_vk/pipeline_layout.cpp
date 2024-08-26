@@ -9,14 +9,9 @@ fngn_vk::pipeline_layout::pipeline_layout(const swap_chain& swap_chain): m_swap_
 	memset(&m_creation_info, 0, sizeof(pipeline_creation_info));
 
 	// Allow for scissoring or viewports in the pipeline
-	std::vector<VkDynamicState> dynamic_states = {
-		VK_DYNAMIC_STATE_VIEWPORT,
-		VK_DYNAMIC_STATE_SCISSOR
-	};
-
 	m_creation_info.dynamic_state.sType = VK_STRUCTURE_TYPE_PIPELINE_DYNAMIC_STATE_CREATE_INFO;
-	m_creation_info.dynamic_state.dynamicStateCount = static_cast<uint32_t>(dynamic_states.size());
-	m_creation_info.dynamic_state.pDynamicStates = dynamic_states.data();
+	m_creation_info.dynamic_state.dynamicStateCount = static_cast<uint32_t>(m_dynamic_states.size());
+	m_creation_info.dynamic_state.pDynamicStates = m_dynamic_states.data();
 
 	// Hard coded for now
 	m_creation_info.vertex_input.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;
@@ -78,21 +73,20 @@ fngn_vk::pipeline_layout::pipeline_layout(const swap_chain& swap_chain): m_swap_
 	m_creation_info.multi_sampling.alphaToOneEnable = VK_FALSE; // Optional
 
 	// set up alpha blending for the framebuffer
-	VkPipelineColorBlendAttachmentState color_blend_attachment{};
-	color_blend_attachment.colorWriteMask = VK_COLOR_COMPONENT_R_BIT | VK_COLOR_COMPONENT_G_BIT | VK_COLOR_COMPONENT_B_BIT | VK_COLOR_COMPONENT_A_BIT;
-	color_blend_attachment.blendEnable = VK_TRUE;
-	color_blend_attachment.srcColorBlendFactor = VK_BLEND_FACTOR_SRC_ALPHA;
-	color_blend_attachment.dstColorBlendFactor = VK_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA;
-	color_blend_attachment.colorBlendOp = VK_BLEND_OP_ADD;
-	color_blend_attachment.srcAlphaBlendFactor = VK_BLEND_FACTOR_ONE;
-	color_blend_attachment.dstAlphaBlendFactor = VK_BLEND_FACTOR_ZERO;
-	color_blend_attachment.alphaBlendOp = VK_BLEND_OP_ADD;
+	m_color_blend_attachment_state.colorWriteMask = VK_COLOR_COMPONENT_R_BIT | VK_COLOR_COMPONENT_G_BIT | VK_COLOR_COMPONENT_B_BIT | VK_COLOR_COMPONENT_A_BIT;
+	m_color_blend_attachment_state.blendEnable = VK_TRUE;
+	m_color_blend_attachment_state.srcColorBlendFactor = VK_BLEND_FACTOR_SRC_ALPHA;
+	m_color_blend_attachment_state.dstColorBlendFactor = VK_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA;
+	m_color_blend_attachment_state.colorBlendOp = VK_BLEND_OP_ADD;
+	m_color_blend_attachment_state.srcAlphaBlendFactor = VK_BLEND_FACTOR_ONE;
+	m_color_blend_attachment_state.dstAlphaBlendFactor = VK_BLEND_FACTOR_ZERO;
+	m_color_blend_attachment_state.alphaBlendOp = VK_BLEND_OP_ADD;
 
 	m_creation_info.color_blending.sType = VK_STRUCTURE_TYPE_PIPELINE_COLOR_BLEND_STATE_CREATE_INFO;
 	m_creation_info.color_blending.logicOpEnable = VK_TRUE;
 	m_creation_info.color_blending.logicOp = VK_LOGIC_OP_COPY; // Optional
 	m_creation_info.color_blending.attachmentCount = 1;
-	m_creation_info.color_blending.pAttachments = &color_blend_attachment;
+	m_creation_info.color_blending.pAttachments = &m_color_blend_attachment_state;
 	m_creation_info.color_blending.blendConstants[0] = 0.0f; // Optional
 	m_creation_info.color_blending.blendConstants[1] = 0.0f; // Optional
 	m_creation_info.color_blending.blendConstants[2] = 0.0f; // Optional
@@ -105,6 +99,7 @@ fngn_vk::pipeline_layout::pipeline_layout(const swap_chain& swap_chain): m_swap_
 	pipeline_layout_info.pushConstantRangeCount = 0; // Optional
 	pipeline_layout_info.pPushConstantRanges = nullptr; // Optional
 	pipeline_layout_info.pNext = nullptr;
+	pipeline_layout_info.flags = VK_PIPELINE_CREATE_ALLOW_DERIVATIVES_BIT;
 
 	fngn_vk::fnvk_verify(
 		vkCreatePipelineLayout(
