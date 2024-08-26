@@ -24,6 +24,7 @@ namespace fngn_vk
 		const VkExtent2D extents() const;
 		const VkSurfaceFormatKHR surface_format() const;
 		const logical_device& device() const;
+		const std::vector<std::unique_ptr<image_view>>& image_views();
 
 	private:
 		VkSurfaceFormatKHR choose_surface_format() const;

@@ -13,11 +13,11 @@ namespace fngn_vk
 		explicit image_view(const logical_device& device, VkImage image, VkFormat format, VkImageAspectFlags aspect_flags);
 		~image_view();
 
+		inline const VkImageView vk_handle() const { return m_image_view; }
+
 	private:
 		const logical_device& m_device;
 		const VkFormat m_format;
-
-		VkImage m_image;
 		VkImageView m_image_view{};
 	};
 }

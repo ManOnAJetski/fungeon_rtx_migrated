@@ -95,6 +95,11 @@ const fngn_vk::logical_device& fngn_vk::swap_chain::device() const
     return m_logical_device;
 }
 
+const std::vector<std::unique_ptr<fngn_vk::image_view>>& fngn_vk::swap_chain::image_views()
+{
+    return m_image_views;
+}
+
 VkSurfaceFormatKHR fngn_vk::swap_chain::choose_surface_format() const
 {
     for (const auto& available_format : m_swap_chain_support.formats) {

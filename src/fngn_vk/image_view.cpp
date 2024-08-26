@@ -2,7 +2,7 @@
 #include "logical_device.h"
 
 fngn_vk::image_view::image_view(const logical_device& device, VkImage image, VkFormat format, VkImageAspectFlags aspect_flags)
-	: m_device(device), m_image(image), m_format(format)
+	: m_device(device), m_format(format)
 {
 	VkImageViewCreateInfo createInfo = {};
 	createInfo.sType = VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO;

@@ -45,3 +45,8 @@ fngn_vk::render_pass::~render_pass()
 		m_pass = nullptr;
 	}
 }
+
+const fngn_vk::swap_chain& fngn_vk::render_pass::get_swap_chain() const
+{
+	return m_swap_chain;
+}

@@ -9,6 +9,7 @@
 #include <fngn_vk/pipeline_layout.h>
 #include <fngn_vk/graphics_pipeline.h>
 #include <fngn_vk/render_pass.h>
+#include <fngn_vk/frame_buffer.h>
 #include <filesystem>
 
 const uint32_t WIDTH = 800;
@@ -48,6 +49,8 @@ int main(int argc, const char** argv)
             pipeline_layout,
             render_pass,
             std::vector<const fngn_vk::shader*>{ &vert_shader, &frag_shader });
+
+        fngn_vk::frame_buffer frame_buffer(render_pass, swap_chain.extents(), swap_chain.image_views());
 
         main_window.run();
     } catch (const std::exception& e) {

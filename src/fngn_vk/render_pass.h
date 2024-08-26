@@ -14,6 +14,7 @@ namespace fngn_vk
 		~render_pass();
 
 		inline VkRenderPass vk_handle() const { return m_pass; }
+		const swap_chain& get_swap_chain() const;
 
 	private:
 		const swap_chain& m_swap_chain;

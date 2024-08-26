@@ -48,6 +48,8 @@ set(src_files_fngn_vk
 	fngn_vk/swap_chain.h
 	fngn_vk/validator.cpp
 	fngn_vk/validator.h
+	fngn_vk/frame_buffer.cpp
+	fngn_vk/frame_buffer.h
 )
 
 set(src_files_utils
