@@ -32,7 +32,7 @@ namespace fngn_vk
 		std::unique_ptr<fngn_vk::swap_chain> m_swap_chain;
 		std::unique_ptr<fngn_vk::pipeline_layout> m_pipeline_layout;
 		std::unique_ptr<fngn_vk::render_pass> m_render_pass;
-		std::unique_ptr<fngn_vk::graphics_pipeline> m_graphics_pipline;
+		std::unique_ptr<fngn_vk::graphics_pipeline> m_graphics_pipeline;
 		std::vector<std::unique_ptr<fngn_vk::shader>> m_shaders;
 		std::vector< std::unique_ptr<fngn_vk::frame_buffer>> m_swap_chain_frame_buffers;
 		std::unique_ptr<fngn_vk::command_pool> m_command_pool;

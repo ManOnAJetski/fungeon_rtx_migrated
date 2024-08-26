@@ -34,7 +34,7 @@ fngn_vk::renderer::renderer(const logical_device& device)
     m_pipeline_layout = std::make_unique<fngn_vk::pipeline_layout>(*m_swap_chain);
     m_render_pass = std::make_unique<fngn_vk::render_pass>(*m_swap_chain);
 
-    m_graphics_pipline =
+    m_graphics_pipeline =
         std::make_unique<fngn_vk::graphics_pipeline>(
             *m_swap_chain,
             *m_pipeline_layout,
@@ -74,7 +74,44 @@ void fngn_vk::renderer::draw()
         &img_idx);
 
     vkResetCommandBuffer(m_command_buffer->vk_handle(), 0);
-    m_render_pass->execute(*m_command_buffer, *m_swap_chain_frame_buffers[img_idx], *m_graphics_pipline);
+
+    m_command_buffer->record();
+    {
+        VkRenderPassBeginInfo render_pass_info{};
+        render_pass_info.sType = VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO;
+        render_pass_info.renderPass = m_render_pass->vk_handle();
+        render_pass_info.framebuffer = m_swap_chain_frame_buffers[img_idx]->vk_handle();
+
+        render_pass_info.renderArea.offset = { 0, 0 };
+        render_pass_info.renderArea.extent = m_swap_chain->extents();
+
+        VkClearValue clearColor = { {{0.0f, 0.0f, 0.0f, 1.0f}} };
+        render_pass_info.clearValueCount = 1;
+        render_pass_info.pClearValues = &clearColor;
+
+        vkCmdBeginRenderPass(m_command_buffer->vk_handle(), &render_pass_info, VK_SUBPASS_CONTENTS_INLINE);
+
+        vkCmdBindPipeline(m_command_buffer->vk_handle(), VK_PIPELINE_BIND_POINT_GRAPHICS, m_graphics_pipeline->vk_handle());
+
+        VkViewport viewport{};
+        viewport.x = 0.0f;
+        viewport.y = 0.0f;
+        viewport.width = static_cast<float>(m_swap_chain->extents().width);
+        viewport.height = static_cast<float>(m_swap_chain->extents().height);
+        viewport.minDepth = 0.0f;
+        viewport.maxDepth = 1.0f;
+        vkCmdSetViewport(m_command_buffer->vk_handle(), 0, 1, &viewport);
+
+        VkRect2D scissor{};
+        scissor.offset = { 0, 0 };
+        scissor.extent = m_swap_chain->extents();
+        vkCmdSetScissor(m_command_buffer->vk_handle(), 0, 1, &scissor);
+
+        vkCmdDraw(m_command_buffer->vk_handle(), 3, 1, 0, 0);
+
+        vkCmdEndRenderPass(m_command_buffer->vk_handle());
+    }
+    m_command_buffer->end();
 
     VkSubmitInfo submit_info{};
     submit_info.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;

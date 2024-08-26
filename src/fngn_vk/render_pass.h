@@ -19,11 +19,6 @@ namespace fngn_vk
 		inline VkRenderPass vk_handle() const { return m_pass; }
 		const swap_chain& get_swap_chain() const;
 
-		void execute(
-			const command_buffer& command_buffer,
-			const frame_buffer& frame_buffer,
-			const graphics_pipeline& graphics_pipeline) const;
-
 	private:
 		const swap_chain& m_swap_chain;
 		VkRenderPass m_pass{};
