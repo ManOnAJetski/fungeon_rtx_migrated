@@ -9,15 +9,11 @@
 fngn_vk::frame_buffer::frame_buffer(
 	const render_pass& pass,
 	const VkExtent2D& extents,
-	const std::vector<std::unique_ptr<image_view>>& image_views)
+	const std::unique_ptr<image_view>& image_view)
 	: m_device(pass.get_swap_chain().device())
 {
 	std::vector<VkImageView> vk_image_views;
-
-	std::transform(
-		STD_RANGE(image_views),
-		std::back_inserter(vk_image_views),
-		[](const std::unique_ptr<image_view>& image_view) { return image_view->vk_handle(); });
+	vk_image_views.emplace_back(image_view->vk_handle());
 
 	VkFramebufferCreateInfo framebufferInfo{};
 	framebufferInfo.sType = VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO;

@@ -18,6 +18,10 @@ set(src_files
 set(src_files_fngn_vk
 	fngn_vk/base.h
 	fngn_vk/base.cpp
+	fngn_vk/command_pool.h
+	fngn_vk/command_pool.cpp
+	fngn_vk/command_buffer.h
+	fngn_vk/command_buffer.cpp
 	fngn_vk/physical_devices.h
 	fngn_vk/physical_devices.cpp
 	fngn_vk/logical_device.h

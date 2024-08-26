@@ -10,6 +10,8 @@
 #include <fngn_vk/graphics_pipeline.h>
 #include <fngn_vk/render_pass.h>
 #include <fngn_vk/frame_buffer.h>
+#include <fngn_vk/command_buffer.h>
+#include <fngn_vk/command_pool.h>
 #include <filesystem>
 
 const uint32_t WIDTH = 800;
@@ -50,7 +52,17 @@ int main(int argc, const char** argv)
             render_pass,
             std::vector<const fngn_vk::shader*>{ &vert_shader, &frag_shader });
 
-        fngn_vk::frame_buffer frame_buffer(render_pass, swap_chain.extents(), swap_chain.image_views());
+        std::vector<std::unique_ptr<fngn_vk::frame_buffer>> swap_chain_frame_buffers;
+
+        for (const auto& image_view : swap_chain.image_views())
+        {
+            swap_chain_frame_buffers.emplace_back(
+                std::make_unique<fngn_vk::frame_buffer>(
+                    render_pass, swap_chain.extents(), image_view));
+        }
+
+        fngn_vk::command_pool pool(device);
+        fngn_vk::command_buffer cmd_buffer(pool);
 
         main_window.run();
     } catch (const std::exception& e) {

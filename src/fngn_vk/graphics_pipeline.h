@@ -21,6 +21,9 @@ namespace fngn_vk
 			const std::vector<const shader*> shaders);
 
 		~graphics_pipeline();
+
+		const VkPipeline vk_handle() const { return m_pipeline; }
+
 	private:
 		const swap_chain& m_swap_chain;
 		const pipeline_layout& m_pipeline_layout;

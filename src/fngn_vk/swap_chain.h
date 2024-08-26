@@ -9,6 +9,7 @@ namespace fngn_vk
 	class logical_device;
 	class surface;
 	class image_view;
+	class frame_buffer;
 
 	class swap_chain
 	{
@@ -24,7 +25,8 @@ namespace fngn_vk
 		const VkExtent2D extents() const;
 		const VkSurfaceFormatKHR surface_format() const;
 		const logical_device& device() const;
-		const std::vector<std::unique_ptr<image_view>>& image_views();
+		const surface& surface() const;
+		const std::vector<std::unique_ptr<image_view>>& image_views() const;
 
 	private:
 		VkSurfaceFormatKHR choose_surface_format() const;
@@ -35,7 +37,7 @@ namespace fngn_vk
 		VkPresentModeKHR m_present_mode;
 		VkExtent2D m_extents;
 
-		const surface& m_surface;
+		const fngn_vk::surface& m_surface;
 		const logical_device& m_logical_device;
 		physical_device::swap_chain_details m_swap_chain_support;
 
