@@ -19,7 +19,7 @@ ELSE()
     message(STATUS ${Vulkan_LIBRARY})
 ENDIF()
 
-set(MAIN_PROJECT "fungeon_rtx_app")
+set(RAW_MAIN_PROJECT "fungeon_rtx_raw_app")
 
 add_subdirectory(src)
-set_property (DIRECTORY PROPERTY VS_STARTUP_PROJECT ${MAIN_PROJECT})
+set_property (DIRECTORY PROPERTY VS_STARTUP_PROJECT ${RAW_MAIN_PROJECT})
