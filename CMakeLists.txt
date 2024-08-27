@@ -5,12 +5,18 @@ add_compile_options($<$<CXX_COMPILER_ID:MSVC>:/MP>)
 
 project(fungeon_rtx)
 
-set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+if (MSVC)
+    # <ranges> support requires /std:c++latest on MSVC
+    set(CMAKE_CXX_STANDARD 23)
+else ()
+    set(CMAKE_CXX_STANDARD 20)
+endif (MSVC)
 
 find_package(Vulkan REQUIRED)
 find_package(Boost REQUIRED COMPONENTS exception)
+include(dependencies/auto_vk_toolkit.cmake)
 find_package(glfw3 REQUIRED)
 
 IF (NOT Vulkan_FOUND)

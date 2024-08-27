@@ -86,7 +86,7 @@ target_link_libraries(${exe_name} PRIVATE ${Vulkan_LIBRARIES} glfw Boost::boost 
 find_program(GLSLC glslc)
 set(SHADERS_IN_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../shaders")
 set(SHADERS_OUT_DIR "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/shaders")
-file(GLOB SHADERS "${SHADERS_IN_DIR}/*.vert" "${SHADERS_IN_DIR}/*.frag")
+list(APPEND SHADERS "${SHADERS_IN_DIR}/triangle.vert" "${SHADERS_IN_DIR}/triangle.frag")
 file(MAKE_DIRECTORY ${SHADERS_OUT_DIR})
 
 add_custom_command(

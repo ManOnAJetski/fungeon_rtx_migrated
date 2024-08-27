@@ -1,0 +1,77 @@
+{
+    "version": 2,
+    "models": [
+        {
+            "file": "sponza_structure.obj",
+            "name": "sponza_structure",
+            "instances": [
+                {
+                    "name": "sponza_structure0",
+                    "translation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "scaling": [
+                        0.01,
+                        0.01,
+                        0.01
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                }
+            ]
+        },
+        {
+            "file": "sponza_fabric.obj",
+            "name": "sponza_fabric",
+            "instances": [
+                {
+                    "name": "sponza_fabric0",
+                    "translation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "scaling": [
+                        0.01,
+                        0.01,
+                        0.01
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                }
+            ]
+        },
+        {
+            "file": "sponza_plants.obj",
+            "name": "sponza_plants",
+            "instances": [
+                {
+                    "name": "sponza_plants0",
+                    "translation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "scaling": [
+                        0.01,
+                        0.01,
+                        0.01
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                }
+            ]
+        }
+    ]
+}
