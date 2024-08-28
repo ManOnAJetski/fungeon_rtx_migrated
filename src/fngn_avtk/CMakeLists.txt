@@ -10,17 +10,22 @@ foreach( OUTPUTCONFIG ${CMAKE_CONFIGURATION_TYPES} )
 endforeach( OUTPUTCONFIG CMAKE_CONFIGURATION_TYPES )
 
 set(exe_name fngn_vk_avtk)
+add_executable(${exe_name})
 
-add_executable(
-	${exe_name}
-    main.cpp
+target_sources(${exe_name}
+    PRIVATE
+        main.cpp
+        src/fngn_avtk_hello_triangle.cpp
+        src/fngn_avtk_path_tracing.cpp
+        include/fngn_avtk_hello_triangle.h
+        include/fngn_avtk_path_tracing.h
+		include/camera_path.hpp
+		include/ui_helper.hpp
 )
 
-set_target_properties(fngn_vk_avtk PROPERTIES DEBUG_POSTFIX ${CMAKE_DEBUG_POSTFIX} VS_DEBUGGER_WORKING_DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
+target_include_directories(fngn_vk_avtk PUBLIC include/)
 
-target_include_directories(fngn_vk_avtk
-	PUBLIC
-    include/)
+set_target_properties(fngn_vk_avtk PROPERTIES DEBUG_POSTFIX ${CMAKE_DEBUG_POSTFIX} VS_DEBUGGER_WORKING_DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
 
 target_include_directories(fngn_vk_avtk PUBLIC Auto_Vk_Toolkit)
 target_link_libraries(fngn_vk_avtk PUBLIC Auto_Vk_Toolkit)

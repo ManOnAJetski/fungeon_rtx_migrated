@@ -7,7 +7,7 @@ set(avk_UseVMA ON)
 FetchContent_Declare(
     Auto_Vk_Toolkit
     GIT_REPOSITORY      https://github.com/cg-tuwien/Auto-Vk-Toolkit.git
-    GIT_TAG             v0.98
+    GIT_TAG             v1.0
     GIT_SUBMODULES      "auto_vk"
 )
 
