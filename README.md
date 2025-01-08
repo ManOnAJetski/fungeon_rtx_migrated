@@ -1,8 +1,7 @@
 ## fungeon_rtx
 
 ## Description
-A simple path tracer levereging Vulkan's cross platform ray tracing extensions.
-This project is based of the excellent [Raytricing in a Weekend](https://raytracing.github.io/books/RayTracingInOneWeekend.html).
+A hello world rendering app using Vulkan's cross platform rendering capabilities.
 I created this mainly to practice CMake tooling, vcpkg management and real time rendering with Vulkan
 
 ## Installation
