@@ -21,14 +21,14 @@ fngn_vk::renderer::renderer(const logical_device& device)
         m_shaders.emplace_back(
             std::make_unique<fngn_vk::shader>(
                 device,
-                std::filesystem::path("shaders\\triangle.vert.spv"),
+                std::filesystem::absolute(std::filesystem::path("shaders\/triangle.vert.spv")),
                 VK_SHADER_STAGE_VERTEX_BIT)).get());
 
     shader_ptrs.push_back(
         m_shaders.emplace_back(
             std::make_unique<fngn_vk::shader>(
                 device,
-                std::filesystem::path("shaders\\triangle.frag.spv"),
+                std::filesystem::absolute(std::filesystem::path("shaders\/triangle.frag.spv")),
                 VK_SHADER_STAGE_FRAGMENT_BIT)).get());
 
     m_pipeline_layout = std::make_unique<fngn_vk::pipeline_layout>(*m_swap_chain);

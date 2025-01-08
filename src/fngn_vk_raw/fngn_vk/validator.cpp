@@ -1,4 +1,5 @@
 #include "validator.h"
+#include <string.h>
 
 const std::vector<const char*> fngn_vk::validator::enabled_validation_layers = { "VK_LAYER_KHRONOS_validation" };
 const std::vector<const char*> fngn_vk::validator::enabled_validation_extensions = { VK_EXT_DEBUG_UTILS_EXTENSION_NAME };

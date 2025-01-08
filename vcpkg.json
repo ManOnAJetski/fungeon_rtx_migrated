@@ -2,6 +2,7 @@
   "dependencies": [
     "glfw3",
 	"boost-exception",
-	"boost-stacktrace"
+	"boost-stacktrace",
+	"vulkan-memory-allocator"
   ]
 }

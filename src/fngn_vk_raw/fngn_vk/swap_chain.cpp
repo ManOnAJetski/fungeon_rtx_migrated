@@ -58,7 +58,7 @@ fngn_vk::swap_chain::swap_chain(const logical_device& logical_device)
 
 	fnvk_verify(vkCreateSwapchainKHR(device, &createInfo, nullptr, &m_swap_chain), "Creating swap chain failed");
 
-	m_min_image_count = max(2u, m_swap_chain_support.capabilities.minImageCount);
+	m_min_image_count = std::max(2u, m_swap_chain_support.capabilities.minImageCount);
 
 	vkGetSwapchainImagesKHR(m_logical_device.vk_handle(), m_swap_chain, &image_count, nullptr);
 	m_images.resize(image_count);

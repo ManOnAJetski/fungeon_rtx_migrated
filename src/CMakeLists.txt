@@ -1,2 +1,1 @@
 add_subdirectory(fngn_vk_raw)
-add_subdirectory(fngn_avtk)

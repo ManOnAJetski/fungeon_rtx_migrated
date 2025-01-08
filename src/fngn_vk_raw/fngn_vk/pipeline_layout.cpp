@@ -1,7 +1,7 @@
 #include "pipeline_layout.h"
 #include "swap_chain.h"
 #include "logical_device.h"
-
+#include <cstring>
 
 fngn_vk::pipeline_layout::pipeline_layout(const swap_chain& swap_chain): m_swap_chain(swap_chain)
 {

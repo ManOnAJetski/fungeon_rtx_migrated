@@ -16,7 +16,6 @@ endif (MSVC)
 
 find_package(Vulkan REQUIRED)
 find_package(Boost REQUIRED COMPONENTS exception)
-include(dependencies/auto_vk_toolkit.cmake)
 find_package(glfw3 REQUIRED)
 
 IF (NOT Vulkan_FOUND)
