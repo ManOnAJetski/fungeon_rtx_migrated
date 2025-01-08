@@ -2,7 +2,7 @@
 
 ## Description
 A hello world rendering app using Vulkan's cross platform rendering capabilities.
-I created this mainly to practice CMake tooling, vcpkg management and real time rendering with Vulkan
+I created this mainly to practice CMake tooling, vcpkg management and real time rendering with Vulkan.
 
 ## Installation
 The [Vulkan SDK](https://vulkan.lunarg.com/sdk/home) must be installed.
